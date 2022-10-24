@@ -4,11 +4,14 @@ import AppContext from './AppContext';
 
 function Provider({ children }) {
   const [state, setState] = useState('');
+  const [loading, setLoading] = useState('true');
 
   const contextValue = useMemo(() => ({
     state,
     setState,
-  }), [state]);
+    loading,
+    setLoading,
+  }), [state, loading]);
 
   return (
     <AppContext.Provider value={ contextValue }>
