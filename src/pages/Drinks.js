@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from '../components/Header';
 // import PropTypes from 'prop-types';
 
 function Drinks() {
   return (
-    <h3>Drinks</h3>
+    <Header title="Drinks" />
   );
 }
 

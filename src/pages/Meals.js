@@ -1,9 +1,12 @@
 import React from 'react';
+import Header from '../components/Header';
 // import PropTypes from 'prop-types';
 
 function Meals() {
   return (
-    <h3>Meals</h3>
+    <div>
+      <Header title="Meals" searchImage />
+    </div>
   );
 }
 

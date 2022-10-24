@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from '../components/Header';
 // import PropTypes from 'prop-types';
 
 function Profile() {
   return (
-    <h3>Profile</h3>
+    <Header title="Profile" />
   );
 }
 
