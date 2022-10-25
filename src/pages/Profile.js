@@ -1,9 +1,13 @@
 import React from 'react';
+import Footer from '../components/Footer';
 // import PropTypes from 'prop-types';
 
 function Profile() {
   return (
-    <h3>Profile</h3>
+    <div>
+      <h3>Profile</h3>
+      <Footer />
+    </div>
   );
 }
 
