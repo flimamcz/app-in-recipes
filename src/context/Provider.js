@@ -20,9 +20,9 @@ function Provider({ children }) {
       isDisabled,
       setIsDisabled,
       loading,
-      setLoading
+      setLoading,
     }),
-    [email, password, user, isDisabled,loading],
+    [email, password, user, isDisabled, loading],
   );
   return (
     <AppContext.Provider value={ contextValue }>
