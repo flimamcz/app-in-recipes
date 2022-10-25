@@ -5,7 +5,8 @@ import AppContext from './AppContext';
 function Provider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [disable, setDisabled] = useState(true);
+  const [user, setUser] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const contextValue = useMemo(
     () => ({
@@ -13,14 +14,13 @@ function Provider({ children }) {
       setEmail,
       password,
       setPassword,
-      disable,
-      setDisabled,
+      user,
+      setUser,
+      isDisabled,
+      setIsDisabled,
+
     }),
-    [
-      disable,
-      email,
-      password,
-    ],
+    [email, password, user, isDisabled],
   );
 
   return (

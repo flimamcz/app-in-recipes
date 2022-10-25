@@ -1,38 +1,41 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 
+// import PropTypes from 'prop-types';
+
 function Login() {
-  const history = useHistory();
-  const { email,
+  const {
     setEmail,
-    password,
-    setPassword,
-    disabled,
-    setDisabled } = useContext(AppContext);
+    password, setPassword, isDisabled, setIsDisabled, email } = useContext(AppContext);
+  const history = useHistory();
 
-  const validInput = () => {
-    const characterLength = 6;
+  const validaEmailPassword = useCallback(() => {
+    // const { email, password } = user;
+    const CHARAC_MIN = 6;
     const regex = /\S+@\S+\.\S+/;
-    const testEmail = email && regex.test(email);
-    const testPassword = password.length > characterLength;
-    if (testEmail && testPassword) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    };
+    const validaEmail = regex.test(email);
+    const validaPassword = password.length > CHARAC_MIN;
+    const validarInputs = !(validaEmail && validaPassword);
+    setIsDisabled(validarInputs);
+  }, [email, password, setIsDisabled]);
 
-    useEffect(() => {
-      validInput();
-    });
-  
-
-  const handleClick = () => {
-    localStorage.setItem('user', JSON.stringify({ email }));
-    history.push('/meals');
+  const handleChangeEmail = ({ target }) => {
+    setEmail(target.value);
   };
 
+  const handleChangePassword = ({ target }) => {
+    setPassword(target.value);
+  };
+  const clickSubmit = useCallback(() => {
+    const emailEstorage = { email };
+    localStorage.setItem('user', JSON.stringify({ emailEstorage }));
+    history.push('/meals');
+  }, [email, history]);
+
+  useEffect(() => {
+    validaEmailPassword();
+  }, [email, password, validaEmailPassword]);
 
   return (
     <section>
@@ -40,16 +43,18 @@ function Login() {
         <h2 className="title-login">Login</h2>
         <section className="section-input-login">
           <input
-            type="Email"
-            value={ email }
+            type="email"
+            // value={ email }
             data-testid="email-input"
-            placeholder="Digite se email"
-            onChange={ ({ target }) => setEmail(target.value) }
+            placeholder="Digite seu email"
+            onChange={ handleChangeEmail }
           />
           <input
             type="password"
             data-testid="password-input"
-            onChange={ (({ target }) => setPassword(target.value)) }
+            onChange={ handleChangePassword }
+            placeholder="Digite sua senha"
+            // value={ password }
           />
         </section>
         <section className="section-button-login">
@@ -57,8 +62,8 @@ function Login() {
             type="button"
             className="btn-login"
             data-testid="login-submit-btn"
-            disable={ disabled }
-            onClick={ handleClick }
+            disabled={ isDisabled }
+            onClick={ clickSubmit }
           >
             Enter
           </button>
@@ -68,11 +73,5 @@ function Login() {
     </section>
   );
 }
-
-Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
-}.isRequired;
 
 export default Login;
