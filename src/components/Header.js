@@ -17,12 +17,12 @@ export default function Header({ title, searchImage }) {
     <div>
       <img data-testid="profile-top-btn" src={ profileIcon } alt="profile Icon" />
       <h1 data-testid="page-title">{title}</h1>
-      {search && <input type="text" placeholder="Search" />}
-      <button type="button" onClick={ searchClick }>
-        Search
-      </button>
+      {search && <input data-testid="search-input" type="text" placeholder="Search" />}
+
       {searchImage && (
-        <img data-testid="search-top-btn" src={ searchIcon } alt="search Icon" />
+        <button type="button" onClick={ searchClick }>
+          <img data-testid="search-top-btn" src={ searchIcon } alt="search Icon" />
+        </button>
       )}
       <button data-testid="profile-top-btn" type="button" onClick={ profileClick }>
         Profile

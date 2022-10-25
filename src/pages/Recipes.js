@@ -1,11 +1,12 @@
 import React from 'react';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 // import PropTypes from 'prop-types';
 
 function Recipes() {
   return (
     <div>
-      <h3>Recipes</h3>
+      <Header title="Recipes" searchImage />
       <Footer />
     </div>
   );
