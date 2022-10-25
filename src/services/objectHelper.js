@@ -24,29 +24,76 @@ export const handleIngredients = (myObj) => {
 
 const handleUrl = (url) => {
   const embed = 'https://www.youtube.com/embed/';
-  const urlSplit = url.split('.com/watch?v=');
-  return `${embed}${urlSplit[1]}`;
+  if (url !== undefined) {
+    const urlSplit = url.split('.com/watch?v=');
+    return `${embed}${urlSplit[1]}`;
+  }
+  return '';
 };
 
-export const handleObject = (myObj) => ({
-  thumb: myObj.strDrinkThumb || myObj.strMealThumb,
-  title: myObj.strDrink || myObj.strMeal,
+export const handleObject = (myObj, recipeType) => ({
+  id: myObj.idDrink || myObj.idMeal,
+  type: recipeType,
+  nationality: myObj.strArea || '',
   category: myObj.strCategory,
+  alcoholicOrNot: myObj.strAlcoholic || '',
+  name: myObj.strDrink || myObj.strMeal,
+  image: myObj.strDrinkThumb || myObj.strMealThumb,
   ingredients: handleIngredients(myObj),
   instructions: myObj.strInstructions,
-  other: myObj.strAlcoholic || handleUrl(myObj.strYoutube),
+  video: handleUrl(myObj.strYoutube) || '',
+  tags: myObj.strTags.split(',') || '',
 });
 
 export const handleRecommendation = (recommendationList) => {
   const upperIndex = 6;
-  console.log(recommendationList);
   const minRecommendationList = recommendationList.map((item) => ({
-    productId: item.idDrink || item.idMeal,
-    productTitle: item.strDrink || item.strMeal,
-    thumb: item.strDrinkThumb || item.strMealThumb,
+    id: item.idDrink || item.idMeal,
+    name: item.strDrink || item.strMeal,
+    image: item.strDrinkThumb || item.strMealThumb,
   }));
 
   const data = minRecommendationList.filter((item, index) => index < upperIndex);
-  console.log(data);
   return data;
 };
+
+export const buildDoneRecipes = ({
+  id,
+  type,
+  nationality,
+  category,
+  alcoholicOrNot,
+  name,
+  image,
+  tags }) => ({
+
+  id,
+  type,
+  nationality,
+  category,
+  alcoholicOrNot,
+  name,
+  image,
+  doneDate: new Date().toLocaleDateString(),
+  tags,
+}
+);
+
+export const buildFavoriteRecipes = ({
+  id,
+  type,
+  nationality,
+  category,
+  alcoholicOrNot,
+  name,
+  image }) => ({
+
+  id,
+  type,
+  nationality,
+  category,
+  alcoholicOrNot,
+  name,
+  image,
+}
+);

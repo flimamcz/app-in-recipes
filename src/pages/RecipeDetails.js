@@ -14,7 +14,6 @@ import DetailsPageButton from '../components/DetailsPageButton';
 
 function RecipeDetails({ location: { pathname } }) {
   const { loading, setLoading } = useContext(AppContext);
-  const [recipeType, setRecipeType] = useState('');
   const [recipeData, setRecipeData] = useState({});
   const [recommendationList, setRecommendationList] = useState([]);
 
@@ -33,9 +32,9 @@ function RecipeDetails({ location: { pathname } }) {
         await fetchDrinkRecommendation()) : await (fetchMealRecommendation());
 
       const minRecommendationList = handleRecommendation(recommendation);
+      const handleRecipe = handleObject(recipeInfo[0], actualRecipeType);
       setRecommendationList(minRecommendationList);
-      setRecipeType(actualRecipeType);
-      setRecipeData(handleObject(recipeInfo[0]));
+      setRecipeData(handleRecipe);
       setLoading(false);
     };
 
@@ -44,9 +43,9 @@ function RecipeDetails({ location: { pathname } }) {
 
   const renderDetails = () => (
     <section>
-      <RecipeInfo recipeData={ recipeData } recipeType={ recipeType } />
+      <RecipeInfo recipeData={ recipeData } />
       <Carousel recommendationList={ recommendationList } />
-      <DetailsPageButton />
+      <DetailsPageButton recipeData={ recipeData } />
     </section>
   );
 

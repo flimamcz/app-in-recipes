@@ -38,20 +38,20 @@ function Carousel(props) {
       </button>
 
       {recommendationList
-        .map(({ productTitle, thumb }, i) => (
+        .map(({ name, image }, i) => (
           <div
             className="mx-2 text-center"
             hidden={ !handleHidden(i) }
-            key={ productTitle }
+            key={ name }
             data-testid={ `${i}-recommendation-card` }
           >
             <p data-testid={ `${i}-recommendation-title` }>
-              {productTitle}
+              {name}
             </p>
             <img
               className="img-thumbnail"
-              src={ thumb }
-              alt={ productTitle }
+              src={ image }
+              alt={ name }
             />
           </div>
         ))}
