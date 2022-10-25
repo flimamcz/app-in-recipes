@@ -4,7 +4,6 @@ import React from 'react';
 function Card({ index, recipe, type }) {
   const { strMealThumb, strMeal } = recipe;
   const { strDrinkThumb, strDrink } = recipe;
-  console.log(recipe);
   return (
     <div data-testid={ `${index}-recipe-card` }>
       <img

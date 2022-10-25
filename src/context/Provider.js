@@ -5,13 +5,15 @@ import AppContext from './AppContext';
 function Provider({ children }) {
   const [state, setState] = useState('');
   const [recipes, setRecipes] = useState([]);
-
+  const [categoriesFilter, setCategoriesFilter] = useState([]);
   const contextValue = useMemo(() => ({
     state,
     setState,
     recipes,
     setRecipes,
-  }), [state, recipes]);
+    setCategoriesFilter,
+    categoriesFilter,
+  }), [state, recipes, categoriesFilter]);
 
   return (
     <AppContext.Provider value={ contextValue }>

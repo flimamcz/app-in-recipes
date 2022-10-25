@@ -6,9 +6,13 @@ import Footer from '../components/Footer';
 import AppContext from '../context/AppContext';
 import { fetchGeneric } from '../services/fetchHelper';
 import Loading from '../components/Loading';
+import Button from '../components/Button';
 
 function Recipes({ match }) {
-  const { recipes, setRecipes } = useContext(AppContext);
+  const {
+    recipes, setRecipes,
+    categoriesFilter, setCategoriesFilter,
+  } = useContext(AppContext);
 
   useEffect(() => {
     const requestRecipes = async () => {
@@ -25,6 +29,21 @@ function Recipes({ match }) {
     requestRecipes();
   }, [setRecipes, match.path]);
 
+  useEffect(() => {
+    const requestCategories = async () => {
+      const urlCategoryMeals = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+      const urlCategoryDrinks = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+      const ENDPOINT = match.path === '/meals' ? urlCategoryMeals : urlCategoryDrinks;
+      const lengthRecipes = 5;
+      const categories = await fetchGeneric(ENDPOINT);
+      const categoriesLengthFive = match.path === '/meals'
+        ? categories.meals.slice(0, lengthRecipes)
+        : categories.drinks.slice(0, lengthRecipes);
+      setCategoriesFilter(categoriesLengthFive);
+    };
+    requestCategories();
+  }, [match.path, setCategoriesFilter]);
+
   return (
     <div>
       <h3>Recipes</h3>
@@ -36,6 +55,9 @@ function Recipes({ match }) {
           type={ match.path }
         />
       )) : <Loading />}
+      {categoriesFilter.length > 0 && categoriesFilter.map((category) => (
+        <Button key={ uuidv4() } category={ category } />
+      ))}
       <Footer />
     </div>
   );
