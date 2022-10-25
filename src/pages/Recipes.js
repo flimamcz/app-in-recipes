@@ -15,11 +15,11 @@ function Recipes({ match }) {
       const urlMeal = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const urlDrink = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
       const ENDPOINT = match.path === '/meals' ? urlMeal : urlDrink;
-      const lengthRecipes = 13;
+      const lengthRecipes = 12;
       const recipesData = await fetchGeneric(ENDPOINT);
       const recipesLengthTwelve = match.path === '/meals'
-        ? recipesData.meals.slice(1, lengthRecipes)
-        : recipesData.drinks.slice(1, lengthRecipes);
+        ? recipesData.meals.slice(0, lengthRecipes)
+        : recipesData.drinks.slice(0, lengthRecipes);
       setRecipes(recipesLengthTwelve);
     };
     requestRecipes();
