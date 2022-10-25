@@ -1,10 +1,14 @@
 import React from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 // import PropTypes from 'prop-types';
 
 function FavoriteRecipes() {
   return (
-    <Header title="Favorite Recipes" searchImage={ false } />
+    <div>
+      <Header title="Favorite Recipes" searchImage={ false } />
+      <Footer />
+    </div>
   );
 }
 
