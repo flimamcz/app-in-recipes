@@ -7,12 +7,16 @@ import {
   fetchDrinkRecommendation,
   fetchMealRecommendation } from '../services/fetchHelper';
 import Loading from '../components/Loading';
-import { handleObject } from '../services/objectHelper';
+import { handleObject, handleRecommendation } from '../services/objectHelper';
+import RecipeInfo from '../components/RecipeInfo';
+import Carousel from '../components/Carousel';
+import DetailsPageButton from '../components/DetailsPageButton';
 
 function RecipeDetails({ location: { pathname } }) {
   const { loading, setLoading } = useContext(AppContext);
   const [recipeType, setRecipeType] = useState('');
   const [recipeData, setRecipeData] = useState({});
+  const [recommendationList, setRecommendationList] = useState([]);
 
   useEffect(() => {
     const getPageInfo = async () => {
@@ -28,7 +32,8 @@ function RecipeDetails({ location: { pathname } }) {
       const recommendation = (actualRecipeType === 'meals') ? (
         await fetchDrinkRecommendation()) : await (fetchMealRecommendation());
 
-      console.log(recommendation);
+      const minRecommendationList = handleRecommendation(recommendation);
+      setRecommendationList(minRecommendationList);
       setRecipeType(actualRecipeType);
       setRecipeData(handleObject(recipeInfo[0]));
       setLoading(false);
@@ -37,45 +42,21 @@ function RecipeDetails({ location: { pathname } }) {
     getPageInfo();
   }, [pathname, setLoading]);
 
-  const renderDetails = () => {
-    const { photo, ingredients, instructions, category, title, other } = recipeData;
-    return (
-      <section>
-        <img width={ 200 } data-testid="recipe-photo" src={ photo } alt="RecipeImage" />
-        <h3 data-testid="recipe-title">{ title }</h3>
-        {(recipeType === 'drinks') ? (
-          <p data-testid="recipe-category">{ other }</p>) : null }
-        <h3 data-testid="recipe-category">{ category }</h3>
-        <ul>
-          {Object.values(ingredients).map((ingredient, index) => (
-            <li
-              key={ `${ingredient}${index}` }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              {ingredient}
-            </li>))}
-        </ul>
-        <p data-testid="instructions">{ instructions }</p>
-        {(recipeType === 'meals') ? (
+  const renderDetails = () => (
+    <section>
+      <RecipeInfo recipeData={ recipeData } recipeType={ recipeType } />
+      <Carousel recommendationList={ recommendationList } />
+      <DetailsPageButton />
+    </section>
+  );
 
-          <iframe
-            data-testid="video"
-            width="560"
-            height="315"
-            src={ other }
-            title="YouTube video player"
-            frameBorder="0"
-            allowFullScreen
-          >
-            Video
-          </iframe>) : null }
-      </section>
-    );
-  };
+  const renderLoading = () => (
+    <Loading />
+  );
 
   return (
     <main>
-      {loading ? <Loading /> : renderDetails() }
+      { (loading) ? renderLoading() : renderDetails() }
     </main>
   );
 }

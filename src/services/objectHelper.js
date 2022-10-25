@@ -29,10 +29,24 @@ const handleUrl = (url) => {
 };
 
 export const handleObject = (myObj) => ({
-  photo: myObj.strDrinkThumb || myObj.strMealThumb,
+  thumb: myObj.strDrinkThumb || myObj.strMealThumb,
   title: myObj.strDrink || myObj.strMeal,
   category: myObj.strCategory,
   ingredients: handleIngredients(myObj),
   instructions: myObj.strInstructions,
   other: myObj.strAlcoholic || handleUrl(myObj.strYoutube),
 });
+
+export const handleRecommendation = (recommendationList) => {
+  const upperIndex = 6;
+  console.log(recommendationList);
+  const minRecommendationList = recommendationList.map((item) => ({
+    productId: item.idDrink || item.idMeal,
+    productTitle: item.strDrink || item.strMeal,
+    thumb: item.strDrinkThumb || item.strMealThumb,
+  }));
+
+  const data = minRecommendationList.filter((item, index) => index < upperIndex);
+  console.log(data);
+  return data;
+};
