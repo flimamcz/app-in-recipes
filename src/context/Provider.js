@@ -11,7 +11,6 @@ function Provider({ children }) {
   const [recipes, setRecipes] = useState([]);
   const [categoriesFilter, setCategoriesFilter] = useState([]);
 
-
   const contextValue = useMemo(
     () => ({
       email,

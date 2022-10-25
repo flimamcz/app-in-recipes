@@ -7,7 +7,12 @@ import AppContext from '../context/AppContext';
 function Login() {
   const {
     setEmail,
-    password, setPassword, isDisabled, setIsDisabled, email } = useContext(AppContext);
+    password,
+    setPassword,
+    isDisabled,
+    setIsDisabled,
+    email,
+  } = useContext(AppContext);
   const history = useHistory();
 
   const validaEmailPassword = useCallback(() => {
