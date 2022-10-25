@@ -28,3 +28,9 @@ export const fetchDrinkById = async (drinkId) => {
   const data = await response.json();
   return data;
 };
+
+export const fetchGeneric = async (ENDPOINT) => {
+  const response = await fetch(ENDPOINT);
+  const data = await response.json();
+  return data;
+};

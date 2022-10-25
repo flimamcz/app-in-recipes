@@ -4,11 +4,14 @@ import AppContext from './AppContext';
 
 function Provider({ children }) {
   const [state, setState] = useState('');
+  const [recipes, setRecipes] = useState([]);
 
   const contextValue = useMemo(() => ({
     state,
     setState,
-  }), [state]);
+    recipes,
+    setRecipes,
+  }), [state, recipes]);
 
   return (
     <AppContext.Provider value={ contextValue }>
