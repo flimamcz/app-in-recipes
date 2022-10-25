@@ -2,15 +2,15 @@ import React from 'react';
 import Footer from '../components/Footer';
 // import PropTypes from 'prop-types';
 
-function Profile() {
+function Recipes() {
   return (
     <div>
-      <h3>Profile</h3>
+      <h3>Recipes</h3>
       <Footer />
     </div>
   );
 }
 
-// Profile.propTypes = { key: PropTypes.type};
+// Recipes.propTypes = { key: PropTypes.type};
 
-export default Profile;
+export default Recipes;

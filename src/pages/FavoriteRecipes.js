@@ -1,9 +1,13 @@
 import React from 'react';
+import Footer from '../components/Footer';
 // import PropTypes from 'prop-types';
 
 function FavoriteRecipes() {
   return (
-    <h3>FavoriteRecipes</h3>
+    <div>
+      <h3>FavoriteRecipes</h3>
+      <Footer />
+    </div>
   );
 }
 
