@@ -1,7 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from '../context/AppContext';
-import { fetchMealById, fetchDrinkById } from '../services/fetchHelper';
+import {
+  fetchMealById,
+  fetchDrinkById,
+  fetchDrinkRecommendation,
+  fetchMealRecommendation } from '../services/fetchHelper';
 import Loading from '../components/Loading';
 import { handleObject } from '../services/objectHelper';
 
@@ -13,12 +17,18 @@ function RecipeDetails({ location: { pathname } }) {
   useEffect(() => {
     const getPageInfo = async () => {
       setLoading(true);
+
       const urlData = pathname.split('/');
       const actualRecipeType = urlData[1];
       const recipeId = urlData[2];
+
       const recipeInfo = (actualRecipeType === 'meals') ? (
         await fetchMealById(recipeId)) : (await fetchDrinkById(recipeId));
 
+      const recommendation = (actualRecipeType === 'meals') ? (
+        await fetchDrinkRecommendation()) : await (fetchMealRecommendation());
+
+      console.log(recommendation);
       setRecipeType(actualRecipeType);
       setRecipeData(handleObject(recipeInfo[0]));
       setLoading(false);
@@ -27,15 +37,11 @@ function RecipeDetails({ location: { pathname } }) {
     getPageInfo();
   }, [pathname, setLoading]);
 
-  // const renderMeal = () => {
-
-  // };
-
   const renderDetails = () => {
     const { photo, ingredients, instructions, category, title, other } = recipeData;
     return (
       <section>
-        <img data-testid="recipe-photo" src={ photo } alt="RecipeImage" />
+        <img width={ 200 } data-testid="recipe-photo" src={ photo } alt="RecipeImage" />
         <h3 data-testid="recipe-title">{ title }</h3>
         {(recipeType === 'drinks') ? (
           <p data-testid="recipe-category">{ other }</p>) : null }

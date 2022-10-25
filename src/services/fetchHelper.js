@@ -3,15 +3,21 @@
 
 export const fetchMeal = async (type) => {
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/list.php?${type}=list`);
-  const data = await response.json();
-  return data;
+  const { meals } = await response.json();
+  return meals;
+};
+
+export const fetchMealRecommendation = async () => {
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+  const { meals } = await response.json();
+  return meals;
 };
 
 export const fetchIngredientImage = async (ingredientName) => {
   const response = await fetch(`https://www.themealdb.com/images/ingredients/${ingredientName}-Small.png
   `);
-  const data = await response.json();
-  return data;
+  const { meals } = await response.json();
+  return meals;
 };
 export const fetchMealById = async (mealId) => {
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`);
@@ -25,6 +31,14 @@ export const fetchMealById = async (mealId) => {
 export const fetchDrinkById = async (drinkId) => {
   const response = await fetch(
     `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`,
+  );
+  const { drinks } = await response.json();
+  return drinks;
+};
+
+export const fetchDrinkRecommendation = async () => {
+  const response = await fetch(
+    'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
   );
   const { drinks } = await response.json();
   return drinks;
