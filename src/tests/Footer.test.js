@@ -10,13 +10,11 @@ describe('Testa componente Footer', () => {
     expect(title).toBeInTheDocument();
 
     act(() => {
-      history.push('/meals');
+      history.push('/profile');
     });
 
-    const titleRecipes = screen.getByRole('heading', { name: /recipes/i });
     const iconDrink = screen.getByRole('img', { name: /icone representando um drink/i });
     const iconMeal = screen.getByRole('img', { name: /icone representando comidas/i });
-    expect(titleRecipes).toBeInTheDocument();
     expect(iconDrink).toBeInTheDocument();
     expect(iconMeal).toBeInTheDocument();
   });

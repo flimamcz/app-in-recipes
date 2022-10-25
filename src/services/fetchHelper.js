@@ -43,3 +43,9 @@ export const fetchDrinkRecommendation = async () => {
   const { drinks } = await response.json();
   return drinks;
 };
+
+export const fetchGeneric = async (ENDPOINT) => {
+  const response = await fetch(ENDPOINT);
+  const data = await response.json();
+  return data;
+};
