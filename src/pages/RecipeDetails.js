@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import AppContext from '../context/AppContext';
 import { fetchMealById, fetchDrinkById } from '../services/fetchHelper';
 import Loading from '../components/Loading';
+import { handleObject } from '../services/objectHelper';
 
 function RecipeDetails({ location: { pathname } }) {
   const { loading, setLoading } = useContext(AppContext);
@@ -18,22 +19,57 @@ function RecipeDetails({ location: { pathname } }) {
       const recipeInfo = (actualRecipeType === 'meals') ? (
         await fetchMealById(recipeId)) : (await fetchDrinkById(recipeId));
 
-      // if (actualRecipeType === 'meals') {
-      //   const recipeInfo = await fetchMealById(recipeId);
-      // } else if (actualRecipeType === 'drinks') {
-      //   const recipeInfo = await fetchDrinkById(recipeId);
-      // }
       setRecipeType(actualRecipeType);
-      setRecipeData(recipeInfo);
+      setRecipeData(handleObject(recipeInfo[0]));
       setLoading(false);
     };
 
     getPageInfo();
   }, [pathname, setLoading]);
 
+  // const renderMeal = () => {
+
+  // };
+
+  const renderDetails = () => {
+    const { photo, ingredients, instructions, category, title, other } = recipeData;
+    return (
+      <section>
+        <img data-testid="recipe-photo" src={ photo } alt="RecipeImage" />
+        <h3 data-testid="recipe-title">{ title }</h3>
+        {(recipeType === 'drinks') ? (
+          <p data-testid="recipe-category">{ other }</p>) : null }
+        <h3 data-testid="recipe-category">{ category }</h3>
+        <ul>
+          {Object.values(ingredients).map((ingredient, index) => (
+            <li
+              key={ `${ingredient}${index}` }
+              data-testid={ `${index}-ingredient-name-and-measure` }
+            >
+              {ingredient}
+            </li>))}
+        </ul>
+        <p data-testid="instructions">{ instructions }</p>
+        {(recipeType === 'meals') ? (
+
+          <iframe
+            data-testid="video"
+            width="560"
+            height="315"
+            src={ other }
+            title="YouTube video player"
+            frameBorder="0"
+            allowFullScreen
+          >
+            Video
+          </iframe>) : null }
+      </section>
+    );
+  };
+
   return (
     <main>
-      {loading ? <Loading /> : <p>{recipeType + recipeData[0].idMeal}</p>}
+      {loading ? <Loading /> : renderDetails() }
     </main>
   );
 }
