@@ -49,3 +49,11 @@ export const fetchGeneric = async (ENDPOINT) => {
   const data = await response.json();
   return data;
 };
+
+export const fetchIngredientFilter = async (ele, type, letter) => {
+  const response = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/${type}.php?${letter}=${ele}`,
+  );
+  const data = await response.json();
+  return data;
+};

@@ -1,16 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
   fetchIngredientFilter,
 } from '../services/fetchHelper';
 import AppContext from '../context/AppContext';
 
 export default function SearchBar() {
-  const { HandleChangeSearch, searchInput } = useContext(AppContext);
-  const [ingFilter, setIngFilter] = useState({});
+  const { HandleChangeSearch, searchInput, setRecipes } = useContext(AppContext);
 
   const IngredientAPI = async (ele, type, letter) => {
     const data = await fetchIngredientFilter(ele, type, letter);
-    setIngFilter(data);
+    console.log(data);
+    setRecipes(data);
   };
   const handleSearchClick = () => {
     switch (searchInput.filter) {
@@ -30,7 +30,7 @@ export default function SearchBar() {
     default: return null;
     }
   };
-  console.log(ingFilter);
+
   return (
     <div>
       <h3>SearchBar</h3>

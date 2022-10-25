@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
@@ -14,6 +14,7 @@ function Recipes({ match }) {
     recipes, setRecipes,
     categoriesFilter, setCategoriesFilter,
   } = useContext(AppContext);
+  const [teste, setTeste] = useState([]);
 
   useEffect(() => {
     const requestRecipes = async () => {
@@ -25,10 +26,11 @@ function Recipes({ match }) {
       const recipesLengthTwelve = match.path === '/meals'
         ? recipesData.meals.slice(0, lengthRecipes)
         : recipesData.drinks.slice(0, lengthRecipes);
-      setRecipes(recipesLengthTwelve);
+      setTeste(recipesLengthTwelve);
     };
     requestRecipes();
-  }, [setRecipes, match.path]);
+  }, [match.path]);
+  setRecipes(teste);
 
   useEffect(() => {
     const requestCategories = async () => {

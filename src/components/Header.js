@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 export default function Header({ title, searchImage }) {
   const history = useHistory();
@@ -27,6 +28,7 @@ export default function Header({ title, searchImage }) {
       <button data-testid="profile-top-btn" type="button" onClick={ profileClick }>
         Profile
       </button>
+      <SearchBar />
     </div>
   );
 }
