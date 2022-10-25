@@ -16,12 +16,14 @@ export default function Header({ title, searchImage }) {
   const profileClick = () => {
     history.push('/profile');
   };
+
   return (
     <div>
       <img data-testid="profile-top-btn" src={ profileIcon } alt="profile Icon" />
       <h1 data-testid="page-title">{title}</h1>
       {search && (
         <input
+          name="search"
           data-testid="search-input"
           type="text"
           placeholder="Search"

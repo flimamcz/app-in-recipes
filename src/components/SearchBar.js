@@ -10,7 +10,7 @@ export default function SearchBar() {
   const IngredientAPI = async (ele, type, letter) => {
     const data = await fetchIngredientFilter(ele, type, letter);
     console.log(data);
-    setRecipes(data);
+    setRecipes(data.meals);
   };
   const handleSearchClick = () => {
     switch (searchInput.filter) {
