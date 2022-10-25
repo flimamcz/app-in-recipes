@@ -7,6 +7,7 @@ import AppContext from '../context/AppContext';
 import { fetchGeneric } from '../services/fetchHelper';
 import Loading from '../components/Loading';
 import Button from '../components/Button';
+import Header from '../components/Header';
 
 function Recipes({ match }) {
   const {
@@ -43,10 +44,9 @@ function Recipes({ match }) {
     };
     requestCategories();
   }, [match.path, setCategoriesFilter]);
-
   return (
     <div>
-      <h3>Recipes</h3>
+      <Header title="Recipes" searchImage />
       {recipes.length > 0 ? recipes.map((recipe, index) => (
         <Card
           key={ uuidv4() }

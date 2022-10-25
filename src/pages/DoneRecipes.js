@@ -1,11 +1,12 @@
 import React from 'react';
+import Header from '../components/Header';
 import Footer from '../components/Footer';
 // import PropTypes from 'prop-types';
 
 function DoneRecipes() {
   return (
     <div>
-      <h3>DoneRecipes</h3>
+      <Header title="Done Recipes" searchImage={ false } />
       <Footer />
     </div>
   );
