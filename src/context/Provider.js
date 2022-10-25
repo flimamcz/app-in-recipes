@@ -7,6 +7,7 @@ function Provider({ children }) {
   const [password, setPassword] = useState('');
   const [user, setUser] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
+  const [loading, setLoading] = useState('true');
 
   const contextValue = useMemo(
     () => ({
@@ -18,11 +19,11 @@ function Provider({ children }) {
       setUser,
       isDisabled,
       setIsDisabled,
-
+      loading,
+      setLoading
     }),
-    [email, password, user, isDisabled],
+    [email, password, user, isDisabled,loading],
   );
-
   return (
     <AppContext.Provider value={ contextValue }>
       {children}
