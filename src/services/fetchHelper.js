@@ -50,9 +50,9 @@ export const fetchGeneric = async (ENDPOINT) => {
   return data;
 };
 
-export const fetchIngredientFilter = async (ele, type, letter) => {
+export const fetchIngredientFilter = async (ele, type, letter, db) => {
   const response = await fetch(
-    `https://www.themealdb.com/api/json/v1/1/${type}.php?${letter}=${ele}`,
+    `https://www.the${db}db.com/api/json/v1/1/${type}.php?${letter}=${ele}`,
   );
   const data = await response.json();
   return data;

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   fetchIngredientFilter,
 } from '../services/fetchHelper';
@@ -6,29 +7,39 @@ import AppContext from '../context/AppContext';
 
 export default function SearchBar() {
   const { HandleChangeSearch, searchInput, setRecipes } = useContext(AppContext);
-
-  const IngredientAPI = async (ele, type, letter) => {
-    const data = await fetchIngredientFilter(ele, type, letter);
-    console.log(data);
-    setRecipes(data.meals);
+  const history = useHistory();
+  const { location: { pathname } } = history;
+  const IngredientAPI = async (ele, type, letter, db) => {
+    const data = await fetchIngredientFilter(ele, type, letter, db);
+    if (db === 'meal') {
+      if (data.meals.length === 1) {
+        history.push(`/meals/${data.meals[0].idMeal}`);
+      }
+      setRecipes(data.meals);
+    } else if (db === 'cocktail') {
+      if (data.drinks.length === 1) {
+        history.push(`/drinks/${data.drinks[0].idMeal}`);
+      }
+      setRecipes(data.drinks);
+    }
   };
-  const handleSearchClick = () => {
+  const barFilter = (path) => {
     switch (searchInput.filter) {
     case 'ingredient':
-      IngredientAPI(searchInput.search, 'filter', 'i');
-      break;
+      return IngredientAPI(searchInput.search, 'filter', 'i', path);
     case 'Name':
-      IngredientAPI(searchInput.search, 'search', 's');
-      break;
+      return IngredientAPI(searchInput.search, 'search', 's', path);
     case 'First letter':
       if (searchInput.search.length > 1) {
-        global.alert('Your search must have only 1 (one) character');
-      } else {
-        IngredientAPI(searchInput.search, 'search', 'f');
+        return global.alert('Your search must have only 1 (one) character');
       }
-      break;
-    default: return null;
+      return IngredientAPI(searchInput.search, 'search', 'f', path);
+    default: return [];
     }
+  };
+  const handleSearchClick = () => {
+    if (pathname === '/meals') { barFilter('meal'); }
+    if (pathname === '/drinks') { barFilter('cocktail'); }
   };
 
   return (
