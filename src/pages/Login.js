@@ -28,8 +28,10 @@ function Login() {
     setPassword(target.value);
   };
   const clickSubmit = useCallback(() => {
-    const emailEstorage = { email };
-    localStorage.setItem('user', JSON.stringify({ emailEstorage }));
+    // const emailEstorage = { email };
+    localStorage.setItem('mealsToken', '1');
+    localStorage.setItem('cocktaislToken', '1');
+    localStorage.setItem('user', JSON.stringify({ email }));
     history.push('/meals');
   }, [email, history]);
 
