@@ -10,7 +10,16 @@ function Provider({ children }) {
   const [loading, setLoading] = useState('true');
   const [recipes, setRecipes] = useState([]);
   const [categoriesFilter, setCategoriesFilter] = useState([]);
-
+  const [searchInput, setSearchInput] = useState({
+    search: '',
+    filter: '',
+  });
+  
+  const HandleChangeSearch = ({ target }) => {
+    const { name, value } = target;
+    setSearchInput((prevState) => ({ ...prevState, [name]: value }));
+  };
+  
   const contextValue = useMemo(
     () => ({
       email,
@@ -27,8 +36,11 @@ function Provider({ children }) {
       setRecipes,
       setCategoriesFilter,
       categoriesFilter,
+      searchInput,
+      setSearchInput,
+      HandleChangeSearch,
     }),
-    [email, password, user, isDisabled, loading, recipes, categoriesFilter],
+    [email, password, user, isDisabled, loading, recipes, categoriesFilter, searchInput],
   );
   return (
     <AppContext.Provider value={ contextValue }>

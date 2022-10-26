@@ -29,7 +29,7 @@ function Recipes({ match }) {
       setRecipes(recipesLengthTwelve);
     };
     requestRecipes();
-  }, [setRecipes, match.path]);
+  }, [match.path, setRecipes]);
 
   useEffect(() => {
     const requestCategories = async () => {
