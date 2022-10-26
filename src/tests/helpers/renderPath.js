@@ -4,7 +4,6 @@ import { createBrowserHistory } from 'history';
 import { render } from '@testing-library/react';
 import Provider from '../../context/Provider';
 import App from '../../App';
-import Provider from '../../context/Provider';
 
 const renderPath = (path) => {
   const history = createBrowserHistory();

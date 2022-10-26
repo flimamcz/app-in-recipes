@@ -14,12 +14,12 @@ function Provider({ children }) {
     search: '',
     filter: '',
   });
-  
+
   const HandleChangeSearch = ({ target }) => {
     const { name, value } = target;
     setSearchInput((prevState) => ({ ...prevState, [name]: value }));
   };
-  
+
   const contextValue = useMemo(
     () => ({
       email,
@@ -42,6 +42,7 @@ function Provider({ children }) {
     }),
     [email, password, user, isDisabled, loading, recipes, categoriesFilter, searchInput],
   );
+
   return (
     <AppContext.Provider value={ contextValue }>
       {children}
