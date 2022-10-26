@@ -2,21 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function RecipeInfo(props) {
-  const { recipeData, recipeType } = props;
-  const { thumb, ingredients, instructions, category, title, other } = recipeData;
+  const { recipeData } = props;
+  const {
+    type,
+    category,
+    alcoholicOrNot,
+    instructions,
+    name,
+    image,
+    video,
+    ingredients,
+  } = recipeData;
   return (
     <section className="contaniner-fluid">
       <div>
         <img
           width={ 200 }
           data-testid="recipe-photo"
-          src={ thumb }
+          src={ image }
           alt="RecipeImage"
         />
 
-        <h3 className="card-title" data-testid="recipe-title">{ title }</h3>
-        {(recipeType === 'drinks') ? (
-          <p className="card-text" data-testid="recipe-category">{ other }</p>) : null }
+        <h3 className="card-title" data-testid="recipe-title">{ name }</h3>
+        {(type === 'drinks') ? (
+          <p
+            className="card-text"
+            data-testid="recipe-category"
+          >
+            {alcoholicOrNot}
+          </p>) : null }
         <h3 className="card-text" data-testid="recipe-category">{ category }</h3>
 
       </div>
@@ -30,13 +44,13 @@ function RecipeInfo(props) {
           </li>))}
       </ul>
       <p data-testid="instructions">{ instructions }</p>
-      {(recipeType === 'meals') ? (
+      {(type === 'meals') ? (
 
         <iframe
           data-testid="video"
           width="560"
           height="315"
-          src={ other }
+          src={ video }
           title="YouTube video player"
           frameBorder="0"
           allowFullScreen
@@ -49,7 +63,6 @@ function RecipeInfo(props) {
 
 RecipeInfo.propTypes = {
   recipeData: PropTypes.shape(),
-  recipeType: PropTypes.string,
 }.isRequired;
 
 export default RecipeInfo;

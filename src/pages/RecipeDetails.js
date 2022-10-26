@@ -11,17 +11,17 @@ import { handleObject, handleRecommendation } from '../services/objectHelper';
 import RecipeInfo from '../components/RecipeInfo';
 import Carousel from '../components/Carousel';
 import DetailsPageButton from '../components/DetailsPageButton';
+import Buttons from '../components/Buttons';
 
-function RecipeDetails({ location: { pathname } }) {
+function RecipeDetails({ location, history, match }) {
   const { loading, setLoading } = useContext(AppContext);
-  const [recipeType, setRecipeType] = useState('');
   const [recipeData, setRecipeData] = useState({});
   const [recommendationList, setRecommendationList] = useState([]);
+  const { pathname } = location;
 
   useEffect(() => {
     const getPageInfo = async () => {
       setLoading(true);
-
       const urlData = pathname.split('/');
       const actualRecipeType = urlData[1];
       const recipeId = urlData[2];
@@ -33,9 +33,9 @@ function RecipeDetails({ location: { pathname } }) {
         await fetchDrinkRecommendation()) : await (fetchMealRecommendation());
 
       const minRecommendationList = handleRecommendation(recommendation);
+      const handleRecipe = handleObject(recipeInfo[0], actualRecipeType);
       setRecommendationList(minRecommendationList);
-      setRecipeType(actualRecipeType);
-      setRecipeData(handleObject(recipeInfo[0]));
+      setRecipeData(handleRecipe);
       setLoading(false);
     };
 
@@ -44,9 +44,17 @@ function RecipeDetails({ location: { pathname } }) {
 
   const renderDetails = () => (
     <section>
-      <RecipeInfo recipeData={ recipeData } recipeType={ recipeType } />
+      <RecipeInfo recipeData={ recipeData } />
+      <Buttons
+        recipeData={ recipeData }
+      />
       <Carousel recommendationList={ recommendationList } />
-      <DetailsPageButton />
+      <DetailsPageButton
+        recipeData={ recipeData }
+        history={ history }
+        location={ location }
+        match={ match }
+      />
     </section>
   );
 
@@ -61,6 +69,9 @@ function RecipeDetails({ location: { pathname } }) {
   );
 }
 
-RecipeDetails.propTypes = { pathname: PropTypes.string }.isRequired;
+RecipeDetails.propTypes = {
+  pathname: PropTypes.string,
+  history: PropTypes.shape(),
+}.isRequired;
 
 export default RecipeDetails;

@@ -15,7 +15,7 @@ export const handleIngredients = (myObj) => {
   for (let i = 0; i < filterIngredients.length; i += 1) {
     ingredientList = {
       ...ingredientList,
-      [`ingredient${i + 1}`]: `${filterMeasure[i] || vazio}${filterIngredients[i]}`,
+      [`ingredient${i + 1}`]: `${filterMeasure[i] || vazio} ${filterIngredients[i]}`,
     };
   }
   return Object.fromEntries((Object.entries(ingredientList))
@@ -24,27 +24,85 @@ export const handleIngredients = (myObj) => {
 
 const handleUrl = (url) => {
   const embed = 'https://www.youtube.com/embed/';
-  const urlSplit = url.split('.com/watch?v=');
-  return `${embed}${urlSplit[1]}`;
+  if (url !== undefined) {
+    const urlSplit = url.split('.com/watch?v=');
+    return `${embed}${urlSplit[1]}`;
+  }
+  return '';
 };
 
-export const handleObject = (myObj) => ({
-  thumb: myObj.strDrinkThumb || myObj.strMealThumb,
-  title: myObj.strDrink || myObj.strMeal,
+const handleTag = (myObj) => {
+  if (myObj.strTags === null || myObj.strTags === undefined) {
+    return '';
+  }
+  return myObj.strTags.split(',');
+};
+
+export const handleObject = (myObj, recipeType) => ({
+  id: myObj.idDrink || myObj.idMeal,
+  type: recipeType,
+  nationality: myObj.strArea || '',
   category: myObj.strCategory,
+  alcoholicOrNot: myObj.strAlcoholic || '',
+  name: myObj.strDrink || myObj.strMeal,
+  image: myObj.strDrinkThumb || myObj.strMealThumb,
   ingredients: handleIngredients(myObj),
   instructions: myObj.strInstructions,
-  other: myObj.strAlcoholic || handleUrl(myObj.strYoutube),
+  video: handleUrl(myObj.strYoutube) || '',
+  tags: handleTag(myObj),
 });
 
 export const handleRecommendation = (recommendationList) => {
   const upperIndex = 6;
   const minRecommendationList = recommendationList.map((item) => ({
-    productId: item.idDrink || item.idMeal,
-    productTitle: item.strDrink || item.strMeal,
-    thumb: item.strDrinkThumb || item.strMealThumb,
+    id: item.idDrink || item.idMeal,
+    name: item.strDrink || item.strMeal,
+    image: item.strDrinkThumb || item.strMealThumb,
   }));
 
   const data = minRecommendationList.filter((item, index) => index < upperIndex);
   return data;
+};
+
+export const buildDoneRecipes = ({
+  id,
+  type,
+  nationality,
+  category,
+  alcoholicOrNot,
+  name,
+  image,
+  tags }) => ({
+
+  id,
+  type,
+  nationality,
+  category,
+  alcoholicOrNot,
+  name,
+  image,
+  doneDate: new Date().toLocaleDateString(),
+  tags,
+}
+);
+
+export const buildFavoriteRecipes = ({
+  id,
+  type,
+  nationality,
+  category,
+  alcoholicOrNot,
+  name,
+  image }) => {
+  const lastChar = -1;
+  return {
+
+    id,
+    type: type.slice(0, lastChar),
+    nationality,
+    category,
+    alcoholicOrNot,
+    name,
+    image,
+  };
 };
