@@ -9,23 +9,18 @@ function Provider({ children }) {
   const [isDisabled, setIsDisabled] = useState(true);
   const [loading, setLoading] = useState('true');
 
-  const contextValue = useMemo(
-    () => ({
+  const contextValue = useMemo(() => ({
+    email,
+    setEmail,
+    password,
+    setPassword,
+    user,
+    setUser,
+    isDisabled,
+    setIsDisabled,
+    loading,
+    setLoading }), [email, password, user, isDisabled, loading]);
 
-      email,
-      setEmail,
-      password,
-      setPassword,
-      user,
-      setUser,
-      isDisabled,
-      setIsDisabled,
-      loading,
-      setLoading,
-
-    }),
-    [email, password, user, isDisabled, loading],
-  );
   return (
     <AppContext.Provider value={ contextValue }>
       {children}
