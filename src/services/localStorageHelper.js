@@ -41,6 +41,7 @@ export const saveFavoriteRecipes = (recipeData) => {
     ...savedFavoriteRecipes,
     buildFavoriteRecipes(recipeData),
   ];
+
   localStorage.setItem('favoriteRecipes', JSON.stringify(handleInfo));
 };
 

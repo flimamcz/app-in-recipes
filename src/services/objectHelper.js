@@ -15,7 +15,7 @@ export const handleIngredients = (myObj) => {
   for (let i = 0; i < filterIngredients.length; i += 1) {
     ingredientList = {
       ...ingredientList,
-      [`ingredient${i + 1}`]: `${filterMeasure[i] || vazio}${filterIngredients[i]}`,
+      [`ingredient${i + 1}`]: `${filterMeasure[i] || vazio} ${filterIngredients[i]}`,
     };
   }
   return Object.fromEntries((Object.entries(ingredientList))
@@ -31,6 +31,13 @@ const handleUrl = (url) => {
   return '';
 };
 
+const handleTag = (myObj) => {
+  if (myObj.strTags === null || myObj.strTags === undefined) {
+    return '';
+  }
+  return myObj.strTags.split(',');
+};
+
 export const handleObject = (myObj, recipeType) => ({
   id: myObj.idDrink || myObj.idMeal,
   type: recipeType,
@@ -42,7 +49,7 @@ export const handleObject = (myObj, recipeType) => ({
   ingredients: handleIngredients(myObj),
   instructions: myObj.strInstructions,
   video: handleUrl(myObj.strYoutube) || '',
-  tags: myObj.strTags.split(',') || '',
+  tags: handleTag(myObj),
 });
 
 export const handleRecommendation = (recommendationList) => {
@@ -86,14 +93,16 @@ export const buildFavoriteRecipes = ({
   category,
   alcoholicOrNot,
   name,
-  image }) => ({
+  image }) => {
+  const lastChar = -1;
+  return {
 
-  id,
-  type,
-  nationality,
-  category,
-  alcoholicOrNot,
-  name,
-  image,
-}
-);
+    id,
+    type: type.slice(0, lastChar),
+    nationality,
+    category,
+    alcoholicOrNot,
+    name,
+    image,
+  };
+};
