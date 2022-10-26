@@ -23,7 +23,7 @@ describe('Testa componente Recipes', () => {
     expect(buttonAll).toBeInTheDocument();
   });
 
-  it('Clica no botão e verifica chamada', async () => {
+  it('Verifica se existe o botão chamado Beef e All', async () => {
     const { history } = renderPath(<App />);
     act(() => {
       history.push('/');
@@ -45,7 +45,8 @@ describe('Testa componente Recipes', () => {
       const buttonAll = screen.getByRole('button', { name: /all/i });
       expect(buttonAll).toBeInTheDocument();
       userEvent.click(buttonAll);
-      expect(screen.getByText(/corba/i)).toBeInTheDocument();
+      const nameRecipe = screen.getByText(/corba/i);
+      expect(nameRecipe).toBeInTheDocument();
     });
   });
 });
