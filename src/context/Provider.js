@@ -11,6 +11,7 @@ function Provider({ children }) {
 
   const contextValue = useMemo(
     () => ({
+
       email,
       setEmail,
       password,
@@ -21,6 +22,7 @@ function Provider({ children }) {
       setIsDisabled,
       loading,
       setLoading,
+
     }),
     [email, password, user, isDisabled, loading],
   );
