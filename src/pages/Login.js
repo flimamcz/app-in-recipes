@@ -7,7 +7,12 @@ import AppContext from '../context/AppContext';
 function Login() {
   const {
     setEmail,
-    password, setPassword, isDisabled, setIsDisabled, email } = useContext(AppContext);
+    password,
+    setPassword,
+    isDisabled,
+    setIsDisabled,
+    email,
+  } = useContext(AppContext);
   const history = useHistory();
 
   const validaEmailPassword = useCallback(() => {
@@ -28,8 +33,10 @@ function Login() {
     setPassword(target.value);
   };
   const clickSubmit = useCallback(() => {
-    const emailEstorage = { email };
-    localStorage.setItem('user', JSON.stringify({ emailEstorage }));
+    // const emailEstorage = { email };
+    localStorage.setItem('mealsToken', '1');
+    localStorage.setItem('cocktaislToken', '1');
+    localStorage.setItem('user', JSON.stringify({ email }));
     history.push('/meals');
   }, [email, history]);
 
