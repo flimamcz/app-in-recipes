@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, screen } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderPath from './helpers/renderPath';
 import App from '../App';
@@ -34,8 +34,18 @@ describe('Testa componente Recipes', () => {
     act(() => {
       history.push('/meals');
     });
+
+    const titleRecipes = screen.getByText(/recipes/i);
+    expect(titleRecipes).toBeInTheDocument();
     const buttonBeef = await screen.findByRole('button', { name: /beef/i });
     expect(buttonBeef).toBeInTheDocument();
     userEvent.click(buttonBeef);
+
+    await waitFor(() => {
+      const buttonAll = screen.getByRole('button', { name: /all/i });
+      expect(buttonAll).toBeInTheDocument();
+      userEvent.click(buttonAll);
+      expect(screen.getByText(/corba/i)).toBeInTheDocument();
+    });
   });
 });
