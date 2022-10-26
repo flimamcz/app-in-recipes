@@ -14,12 +14,12 @@ function Provider({ children }) {
     search: '',
     filter: '',
   });
-
+  
   const HandleChangeSearch = ({ target }) => {
     const { name, value } = target;
     setSearchInput((prevState) => ({ ...prevState, [name]: value }));
   };
-
+  
   const contextValue = useMemo(
     () => ({
       email,

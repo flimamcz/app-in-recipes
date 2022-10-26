@@ -39,7 +39,6 @@ export const handleObject = (myObj) => ({
 
 export const handleRecommendation = (recommendationList) => {
   const upperIndex = 6;
-  console.log(recommendationList);
   const minRecommendationList = recommendationList.map((item) => ({
     productId: item.idDrink || item.idMeal,
     productTitle: item.strDrink || item.strMeal,
@@ -47,6 +46,5 @@ export const handleRecommendation = (recommendationList) => {
   }));
 
   const data = minRecommendationList.filter((item, index) => index < upperIndex);
-  console.log(data);
   return data;
 };
