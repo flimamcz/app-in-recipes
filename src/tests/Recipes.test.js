@@ -3,6 +3,10 @@ import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderPath from './helpers/renderPath';
 import App from '../App';
+import helperSlice from '../services/helperSlice';
+import meals from '../../cypress/mocks/meals';
+
+const sliceTwelve = 12;
 
 describe('Testa componente Recipes', () => {
   it('Verifica se tem o texto Recipes na tela e botoes', async () => {
@@ -13,6 +17,7 @@ describe('Testa componente Recipes', () => {
     act(() => {
       history.push('/meals');
     });
+
     const titleMeals = screen.getByRole('heading', { name: /recipes/i });
     expect(titleMeals).toBeInTheDocument();
     const buttonProfile = screen.getByRole('button', { name: /profile/i });
@@ -25,9 +30,11 @@ describe('Testa componente Recipes', () => {
 
   it('Verifica se existe o botão chamado Beef e All', async () => {
     const { history } = renderPath(<App />);
+
     act(() => {
       history.push('/');
     });
+
     const title = screen.getByRole('heading', { name: /login/i });
     expect(title).toBeInTheDocument();
 
@@ -37,16 +44,26 @@ describe('Testa componente Recipes', () => {
 
     const titleRecipes = screen.getByText(/recipes/i);
     expect(titleRecipes).toBeInTheDocument();
-    const buttonBeef = await screen.findByRole('button', { name: /beef/i });
-    expect(buttonBeef).toBeInTheDocument();
-    userEvent.click(buttonBeef);
 
-    await waitFor(() => {
+    await waitFor(async () => {
+      const buttonBeef = await screen.findByRole('button', { name: /beef/i });
+      expect(buttonBeef).toBeInTheDocument();
+      userEvent.click(buttonBeef);
       const buttonAll = screen.getByRole('button', { name: /all/i });
       expect(buttonAll).toBeInTheDocument();
       userEvent.click(buttonAll);
-      const nameRecipe = screen.getByText(/corba/i);
-      expect(nameRecipe).toBeInTheDocument();
     });
+  });
+
+  it('Testa função helper slice', () => {
+    const { history } = renderPath(<App />);
+
+    act(() => {
+      history.push('/meals');
+    });
+
+    const router = history.location.pathname;
+    const sliced = helperSlice(meals, sliceTwelve, router);
+    expect(sliced.length).toBe(12);
   });
 });
