@@ -17,7 +17,6 @@ describe('Testa componente Recipes', () => {
       history.push('/meals');
     });
 
-    expect(screen.getByText(/recipes/i)).toBeInTheDocument();
     const iconSearch = screen.getByRole('img', { name: /search icon/i });
     const buttonProfile = screen.getByRole('button', { name: /profile/i });
     expect(buttonProfile).toBeInTheDocument();
@@ -55,9 +54,26 @@ describe('Testa componente Recipes', () => {
     }, { timeout: 3000 });
   });
 
-  it('Testa função helperSlice', () => {
+  it('Testa função helperSlice', async () => {
+    const { history } = renderPath(<App />);
+
+    act(() => {
+      history.push('/meals');
+    });
     const router = '/meals';
+    expect(history.location.pathname).toBe(router);
     const recipesSliced = helperSlice(meals, sliceTwelve, router);
     expect(recipesSliced.length).toBe(12);
+
+    await waitFor(async () => {
+      const images = await screen.findAllByRole('img', {
+        name: /imagem de uma receita/i,
+      });
+      expect(images.length).toBe(12);
+    }, { timeout: 3000 });
+
+    // const images = await screen.findAllByRole('img', {
+    //   name: /imagem de uma receita/i,
+    // });
   });
 });

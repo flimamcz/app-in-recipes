@@ -64,11 +64,6 @@ function Recipes({ match }) {
 
     const recipesFilter = helperSlice(requestRecipesByFilter, sliceTwelve, router);
     setRecipes(recipesFilter);
-    setToggleFilter(!toggleFilter);
-
-    if (toggleFilter) {
-      requestAllRecipes();
-    }
   };
 
   return (
