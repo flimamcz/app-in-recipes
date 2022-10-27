@@ -11,10 +11,8 @@ import Header from '../components/Header';
 
 function Recipes({ match }) {
   const [toggleFilter, setToggleFilter] = useState(false);
-  const {
-    recipes, setRecipes,
-    categoriesFilter, setCategoriesFilter,
-  } = useContext(AppContext);
+  const { recipes,
+    setRecipes, categoriesFilter, setCategoriesFilter } = useContext(AppContext);
 
   useEffect(() => {
     const requestRecipes = async () => {
@@ -77,10 +75,19 @@ function Recipes({ match }) {
 
   return (
     <div>
-      <Header title="Recipes" searchImage />
-      {categoriesFilter.length > 0 && categoriesFilter.map((category) => (
-        <Button key={ uuidv4() } category={ category } onClick={ recipesByFilter } />
-      ))}
+      {match.path === '/meals' ? (
+        <Header title="Meals" searchImage />
+      ) : (
+        <Header title="Drinks" searchImage />
+      )}
+      {categoriesFilter.length > 0
+        && categoriesFilter.map((category) => (
+          <Button
+            key={ uuidv4() }
+            category={ category }
+            onClick={ recipesByFilter }
+          />
+        ))}
       <button
         type="button"
         data-testid="All-category-filter"
@@ -88,14 +95,18 @@ function Recipes({ match }) {
       >
         All
       </button>
-      {recipes.length > 0 ? recipes.map((recipe, index) => (
-        <Card
-          key={ uuidv4() }
-          index={ index }
-          recipe={ recipe }
-          type={ match.path }
-        />
-      )) : <Loading />}
+      {recipes.length > 0 ? (
+        recipes.map((recipe, index) => (
+          <Card
+            key={ uuidv4() }
+            index={ index }
+            recipe={ recipe }
+            type={ match.path }
+          />
+        ))
+      ) : (
+        <Loading />
+      )}
       <Footer />
     </div>
   );

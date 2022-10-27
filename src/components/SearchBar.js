@@ -9,20 +9,31 @@ export default function SearchBar() {
   const { HandleChangeSearch, searchInput, setRecipes } = useContext(AppContext);
   const history = useHistory();
   const { location: { pathname } } = history;
+  const max = 12;
+
   const IngredientAPI = async (ele, type, letter, db) => {
     const data = await fetchIngredientFilter(ele, type, letter, db);
     if (db === 'meal') {
-      if (data.meals.length === 1) {
+      if (!data.meals) {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      } else if (data.meals.length === 1) {
         history.push(`/meals/${data.meals[0].idMeal}`);
+      } else {
+        const TwelveMeals = data.meals.slice(0, max);
+        setRecipes(TwelveMeals);
       }
-      setRecipes(data.meals);
     } else if (db === 'cocktail') {
-      if (data.drinks.length === 1) {
-        history.push(`/drinks/${data.drinks[0].idMeal}`);
+      if (!data.drinks) {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      } else if (data.drinks.length === 1) {
+        history.push(`/drinks/${data.drinks[0].idDrink}`);
+      } else {
+        const TwelveDrinks = data.drinks.slice(0, max);
+        setRecipes(TwelveDrinks);
       }
-      setRecipes(data.drinks);
     }
   };
+
   const barFilter = (path) => {
     switch (searchInput.filter) {
     case 'ingredient':
@@ -83,7 +94,7 @@ export default function SearchBar() {
         data-testid="exec-search-btn"
         onClick={ handleSearchClick }
       >
-        Search
+        Pesquisar
       </button>
     </div>
   );
