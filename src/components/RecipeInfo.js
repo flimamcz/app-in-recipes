@@ -6,6 +6,8 @@ import IngredientItem from './IngredientItem';
 import { getInProgressRecipes } from '../services/localStorageHelper';
 import AppContext from '../context/AppContext';
 
+import { filterKeys } from '../services/objectHelper';
+
 function RecipeInfo(props) {
   const {
     checkedIngredients,
@@ -33,8 +35,18 @@ function RecipeInfo(props) {
     }
   }, [recipeId, type, setCheckedIngredients]);
 
+  const testFunctions = () => {
+    filterKeys(recipeData, 'Ingredient');
+  };
+
   return (
     <section className="contaniner-fluid">
+      <button
+        type="button"
+        onClick={ testFunctions }
+      >
+        Testar Função
+      </button>
       <div>
         <img
           width={ 200 }
