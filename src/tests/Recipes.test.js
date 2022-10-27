@@ -3,50 +3,61 @@ import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderPath from './helpers/renderPath';
 import App from '../App';
+import helperSlice from '../services/helperSlice';
+import meals from '../../cypress/mocks/meals';
+
+const sliceTwelve = 12;
 
 describe('Testa componente Recipes', () => {
-  it('Verifica se tem o texto Recipes na tela e botoes', async () => {
+  it('Verifica se renderiza os botões SEARCH e PROFILE na tela de recipes', async () => {
     const { history } = renderPath(<App />);
-    const title = screen.getByRole('heading', { name: /login/i });
-    expect(title).toBeInTheDocument();
+    expect(history.location.pathname).toBe('/');
 
     act(() => {
       history.push('/meals');
     });
-    const titleMeals = screen.getByRole('heading', { name: /recipes/i });
-    expect(titleMeals).toBeInTheDocument();
+
+    expect(screen.getByText(/recipes/i)).toBeInTheDocument();
+    const iconSearch = screen.getByRole('img', { name: /search icon/i });
     const buttonProfile = screen.getByRole('button', { name: /profile/i });
     expect(buttonProfile).toBeInTheDocument();
-    const buttonChicken = await screen.findByRole('button', { name: /chicken/i });
-    expect(buttonChicken).toBeInTheDocument();
-    const buttonAll = screen.getByRole('button', { name: /all/i });
-    expect(buttonAll).toBeInTheDocument();
+    expect(iconSearch).toBeInTheDocument();
   });
 
-  it('Verifica se existe o botão chamado Beef e All', async () => {
+  it('Verifica se encontra o texto AYAM PERCIK após clicar no botão chicken', async () => {
     const { history } = renderPath(<App />);
-    act(() => {
-      history.push('/');
-    });
-    const title = screen.getByRole('heading', { name: /login/i });
-    expect(title).toBeInTheDocument();
 
     act(() => {
       history.push('/meals');
     });
 
-    const titleRecipes = screen.getByText(/recipes/i);
-    expect(titleRecipes).toBeInTheDocument();
-    const buttonBeef = await screen.findByRole('button', { name: /beef/i });
-    expect(buttonBeef).toBeInTheDocument();
-    userEvent.click(buttonBeef);
+    await waitFor(async () => {
+      const buttonChicken = screen.getByRole('button', { name: /chicken/i });
+      expect(buttonChicken).toBeInTheDocument();
+      userEvent.click(buttonChicken);
 
-    await waitFor(() => {
+      const firstRecipes = screen.findByRole('heading', { name: /ayam percik/i });
+      expect(firstRecipes);
+    }, { timeout: 4000 });
+  });
+
+  it('Testa botão All', async () => {
+    const { history } = renderPath(<App />);
+
+    act(() => {
+      history.push('/meals');
+    });
+
+    await waitFor(async () => {
       const buttonAll = screen.getByRole('button', { name: /all/i });
       expect(buttonAll).toBeInTheDocument();
       userEvent.click(buttonAll);
-      const nameRecipe = screen.getByText(/corba/i);
-      expect(nameRecipe).toBeInTheDocument();
-    });
+    }, { timeout: 3000 });
+  });
+
+  it('Testa função helperSlice', () => {
+    const router = '/meals';
+    const recipesSliced = helperSlice(meals, sliceTwelve, router);
+    expect(recipesSliced.length).toBe(12);
   });
 });
