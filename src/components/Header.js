@@ -19,7 +19,13 @@ export default function Header({ title, searchImage }) {
 
   return (
     <div>
-      <img data-testid="profile-top-btn" src={ profileIcon } alt="profile Icon" />
+      {' '}
+      <button
+        type="button"
+        onClick={ profileClick }
+      >
+        <img data-testid="profile-top-btn" src={ profileIcon } alt="profile Icon" />
+      </button>
       <h1 data-testid="page-title">{title}</h1>
       {search && (
         <input
@@ -41,13 +47,6 @@ export default function Header({ title, searchImage }) {
           />
         </button>
       )}
-      <button
-        data-testid="profile-top-btn"
-        type="button"
-        onClick={ profileClick }
-      >
-        Profile
-      </button>
       <SearchBar />
     </div>
   );

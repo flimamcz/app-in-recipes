@@ -19,7 +19,7 @@ describe('Testar componentes da tela de Login', () => {
     act(() => {
       history.push('/meals');
     });
-    const title = screen.getByText('Recipes');
+    const title = screen.getByText('Meals');
     expect(title).toBeInTheDocument();
   });
 
