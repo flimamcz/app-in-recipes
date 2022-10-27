@@ -32,7 +32,6 @@ function Recipes({ match }) {
 
   const urlCategoryMeals = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
   const urlCategoryDrinks = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
-
   useEffect(() => {
     const requestRecipes = async () => {
       const ENDPOINT = router === '/meals' ? urlMeal : urlDrink;
