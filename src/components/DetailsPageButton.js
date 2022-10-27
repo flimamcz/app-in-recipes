@@ -1,16 +1,23 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   getInProgressRecipes,
   saveInProgressRecipe,
-  getDoneRecipes } from '../services/localStorageHelper';
+  getDoneRecipes,
+  saveDoneRecipes,
+  removeInProgressRecipe } from '../services/localStorageHelper';
+import AppContext from '../context/AppContext';
 
 function DetailsPageButton(props) {
+  const { setLoading, checkedIngredients } = useContext(AppContext);
   const [recipeStatus, setRecipeStatus] = useState();
-  const { recipeData, history } = props;
+  const history = useHistory();
+  const { recipeData } = props;
   const { type } = recipeData;
 
   const handleRecipeStatus = useCallback(() => {
+    const isInProgressPage = history.location.pathname.split('/')[3];
     const inProgressRecipes = getInProgressRecipes();
     const isInProgress = Object
       .keys(inProgressRecipes[type])
@@ -18,22 +25,34 @@ function DetailsPageButton(props) {
     const actualDoneRecipes = getDoneRecipes();
     const isDone = actualDoneRecipes.some(({ id }) => id === recipeData.id);
     setRecipeStatus('START');
-    if (isInProgress) {
+    if (isInProgressPage) {
+      setRecipeStatus('IN_PROGRESS_PAGE');
+    } else if (isInProgress) {
       setRecipeStatus('IN_PROGRESS');
     } else if (isDone) {
       setRecipeStatus('DONE');
     }
-  }, [recipeData.id, type]);
+  }, [recipeData.id, type, history]);
 
-  const handleClick = () => {
-    saveInProgressRecipe(recipeData, []);
+  const handleClick = ({ target: { name } }) => {
+    if (name === 'start') { saveInProgressRecipe(recipeData, checkedIngredients); }
     handleRecipeStatus();
+    setLoading(true);
     history.push(`/${type}/${recipeData.id}/in-progress`);
   };
 
   useEffect(() => {
     handleRecipeStatus();
   }, [handleRecipeStatus]);
+
+  const finishRecipe = () => {
+    saveDoneRecipes(recipeData);
+    removeInProgressRecipe(recipeData);
+    history.push('/done-recipes');
+  };
+
+  const finishDisable = () => Object
+    .keys(recipeData.ingredients).length === checkedIngredients.length;
 
   return (
     <div>
@@ -50,11 +69,23 @@ function DetailsPageButton(props) {
         <button
           className="fixed-bottom"
           type="button"
+          name="start"
           data-testid="start-recipe-btn"
           onClick={ handleClick }
         >
           Start Recipe
         </button>)}
+      { (recipeStatus === 'IN_PROGRESS_PAGE') && (
+        <button
+          className="fixed-bottom"
+          type="button"
+          disabled={ !finishDisable() }
+          data-testid="finish-recipe-btn"
+          onClick={ finishRecipe }
+        >
+          Finish Recipe
+        </button>
+      ) }
       { (recipeStatus === 'DONE') && (null)}
 
     </div>

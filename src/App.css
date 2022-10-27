@@ -71,3 +71,7 @@
   bottom: 0;
   position: fixed;
 }
+
+.selected {
+  text-decoration: line-through solid black;
+}

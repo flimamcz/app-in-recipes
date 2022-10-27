@@ -14,10 +14,20 @@ function Provider({ children }) {
     search: '',
     filter: '',
   });
+  const [checkedIngredients, setCheckedIngredients] = useState([]);
 
   const HandleChangeSearch = ({ target }) => {
     const { name, value } = target;
     setSearchInput((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleCheck = ({ target: { id, checked } }) => {
+    if (checked) {
+      setCheckedIngredients((prevState) => [...prevState, Number(id)]);
+    } else if (checked === false) {
+      setCheckedIngredients((prevState) => prevState
+        .filter((item) => item !== Number(id)));
+    }
   };
 
   const contextValue = useMemo(
@@ -39,8 +49,20 @@ function Provider({ children }) {
       searchInput,
       setSearchInput,
       HandleChangeSearch,
+      checkedIngredients,
+      setCheckedIngredients,
+      handleCheck,
     }),
-    [email, password, user, isDisabled, loading, recipes, categoriesFilter, searchInput],
+    [
+      email,
+      password,
+      user,
+      isDisabled,
+      loading,
+      recipes,
+      categoriesFilter,
+      searchInput,
+      checkedIngredients],
   );
 
   return (
