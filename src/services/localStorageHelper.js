@@ -15,15 +15,19 @@ export const getFavoriteRecipes = () => JSON
   .parse(localStorage.getItem('favoriteRecipes')) || [];
 
 export const saveInProgressRecipe = ({ type, id }, usedIngredients) => {
-  const savedInProgressRecipes = getInProgressRecipes();
-  const handleInfo = {
-    ...savedInProgressRecipes,
-    [type]: {
-      ...savedInProgressRecipes[type],
-      [id]: usedIngredients,
-    },
-  };
-  localStorage.setItem('inProgressRecipes', JSON.stringify(handleInfo));
+  if (type === 'drinks' || type === 'meals') {
+    const findUnique = [...new Set(usedIngredients)]
+      .map((item) => Number(item))
+      .sort((prev, actual) => prev - actual);
+    const savedInProgressRecipes = getInProgressRecipes();
+    const handleInfo = {
+      ...savedInProgressRecipes,
+      [type]: {
+        [id]: findUnique,
+      },
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(handleInfo));
+  }
 };
 
 export const saveDoneRecipes = (recipeData) => {
@@ -49,4 +53,20 @@ export const removeFavoriteRecipes = ({ id }) => {
   const savedFavoriteRecipes = getFavoriteRecipes();
   const filterFavorites = savedFavoriteRecipes.filter((recipe) => recipe.id !== id);
   localStorage.setItem('favoriteRecipes', JSON.stringify(filterFavorites));
+};
+
+export const removeInProgressRecipe = ({ type, id }) => {
+  if (type === 'drinks' || type === 'meals') {
+    const savedInProgressRecipes = getInProgressRecipes();
+    const removeDoneRecipe = Object
+      .fromEntries(Object
+        .entries(savedInProgressRecipes[type])
+        .filter((key) => key[0] !== id));
+    console.log(removeDoneRecipe);
+    const handleInfo = {
+      ...savedInProgressRecipes,
+      [type]: removeDoneRecipe,
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(handleInfo));
+  }
 };

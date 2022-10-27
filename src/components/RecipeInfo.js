@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import ShareButton from './ShareButton';
+import FavoriteButton from './FavoriteButton';
+import IngredientItem from './IngredientItem';
+import { getInProgressRecipes } from '../services/localStorageHelper';
+import AppContext from '../context/AppContext';
 
 function RecipeInfo(props) {
+  const {
+    checkedIngredients,
+    setCheckedIngredients,
+    handleCheck } = useContext(AppContext);
   const { recipeData } = props;
   const {
+    id: recipeId,
     type,
     category,
     alcoholicOrNot,
@@ -13,6 +23,16 @@ function RecipeInfo(props) {
     video,
     ingredients,
   } = recipeData;
+
+  useEffect(() => {
+    const getInProgress = getInProgressRecipes();
+    const find = Object.entries(getInProgress[type])
+      .find((recipe) => recipe[0] === recipeId);
+    if (find !== undefined) {
+      setCheckedIngredients(find[1]);
+    }
+  }, [recipeId, type, setCheckedIngredients]);
+
   return (
     <section className="contaniner-fluid">
       <div>
@@ -22,26 +42,30 @@ function RecipeInfo(props) {
           src={ image }
           alt="RecipeImage"
         />
-
-        <h3 className="card-title" data-testid="recipe-title">{ name }</h3>
+        <div className="d-flex">
+          <FavoriteButton recipeData={ recipeData } />
+          <ShareButton />
+        </div>
+        <h3 data-testid="recipe-title">{ name }</h3>
         {(type === 'drinks') ? (
           <p
-            className="card-text"
             data-testid="recipe-category"
           >
             {alcoholicOrNot}
           </p>) : null }
-        <h3 className="card-text" data-testid="recipe-category">{ category }</h3>
+        <h3 data-testid="recipe-category">{ category }</h3>
 
       </div>
       <ul>
         {Object.values(ingredients).map((ingredient, index) => (
-          <li
+          <IngredientItem
             key={ `${ingredient}${index}` }
-            data-testid={ `${index}-ingredient-name-and-measure` }
-          >
-            {ingredient}
-          </li>))}
+            ingredient={ ingredient }
+            index={ index }
+            handleCheck={ handleCheck }
+            checkedIngredients={ checkedIngredients }
+          />
+        ))}
       </ul>
       <p data-testid="instructions">{ instructions }</p>
       {(type === 'meals') ? (

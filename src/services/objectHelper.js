@@ -1,3 +1,11 @@
+import {
+  fetchMealById,
+  fetchDrinkById,
+  fetchDrinkRecommendation,
+  fetchMealRecommendation } from './fetchHelper';
+
+const lastChar = -1;
+
 // Função baseada na do site: https://masteringjs.io/tutorials/fundamentals/filter-key#:~:text=JavaScript%20objects%20don't%20have,()%20function%20as%20shown%20below.
 const filterKeys = (myObj, valueToFilter) => {
   const fKeys = Object.values(Object.fromEntries(Object
@@ -33,7 +41,7 @@ const handleUrl = (url) => {
 
 const handleTag = (myObj) => {
   if (myObj.strTags === null || myObj.strTags === undefined) {
-    return '';
+    return [];
   }
   return myObj.strTags.split(',');
 };
@@ -75,13 +83,13 @@ export const buildDoneRecipes = ({
   tags }) => ({
 
   id,
-  type,
+  type: type.slice(0, lastChar),
   nationality,
   category,
   alcoholicOrNot,
   name,
   image,
-  doneDate: new Date().toLocaleDateString(),
+  doneDate: new Date(),
   tags,
 }
 );
@@ -93,16 +101,27 @@ export const buildFavoriteRecipes = ({
   category,
   alcoholicOrNot,
   name,
-  image }) => {
-  const lastChar = -1;
-  return {
+  image }) => ({
 
-    id,
-    type: type.slice(0, lastChar),
-    nationality,
-    category,
-    alcoholicOrNot,
-    name,
-    image,
-  };
+  id,
+  type: type.slice(0, lastChar),
+  nationality,
+  category,
+  alcoholicOrNot,
+  name,
+  image,
+});
+
+export const getRecipeDetails = async (urlData) => {
+  const actualRecipeType = urlData[1];
+  const recipeId = urlData[2];
+  const recipeInfo = (actualRecipeType === 'meals') ? (
+    await fetchMealById(recipeId)) : (await fetchDrinkById(recipeId));
+
+  const recommendation = (actualRecipeType === 'meals') ? (
+    await fetchDrinkRecommendation()) : await (fetchMealRecommendation());
+
+  const minRecommendationList = handleRecommendation(recommendation);
+  const handleRecipe = handleObject(recipeInfo[0], actualRecipeType);
+  return { minRecommendationList, handleRecipe };
 };
