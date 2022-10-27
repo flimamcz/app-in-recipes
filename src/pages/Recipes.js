@@ -9,6 +9,7 @@ import Loading from '../components/Loading';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import helperSlice from '../services/helperSlice';
+import toggleReset from '../services/toggleReset';
 
 function Recipes({ match }) {
   const [toggleFilter, setToggleFilter] = useState(false);
@@ -61,9 +62,9 @@ function Recipes({ match }) {
     const element = target.innerText;
     const requestRecipesByFilter = await
     fetchIngredientFilter(element, 'filter', 'c', DB);
-
     const recipesFilter = helperSlice(requestRecipesByFilter, sliceTwelve, router);
     setRecipes(recipesFilter);
+    toggleReset(toggleFilter, setToggleFilter, requestAllRecipes);
   };
 
   return (
