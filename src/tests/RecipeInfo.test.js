@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, screen, waitFor } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderPath from './helpers/renderPath';
 import App from '../App';
@@ -39,14 +39,6 @@ describe('Testa o componente RecipeDetails', () => {
     });
 
     expect(history.location.pathname).toBe('/meals/52771/in-progress');
-
-    // expect(recipeAlcooholic).not.toBeInTheDocument();
-    // const carousel = screen.getByRole('article', { name: /recomendations-carousel/i });
-    // const carouselBackButton = screen.getByRole('button', {  name: /back/i});
-    // const carouselNextButton = screen.getByRole('button', {  name: /next/i});
-    // const recomendationsCard1 = screen.getByTestId('0-recommendation-card');
-    // const recomendationsCard4 = screen.getByTestId('3-recommendation-card');
-    // const recomendationsCard5 = screen.getByTestId('4-recommendation-card');
   });
 
   test('Verifica se o componente RecipeInfo renderiza os componentes corretos no caminho /drinks/id', async () => {
@@ -82,11 +74,5 @@ describe('Testa o componente RecipeDetails', () => {
     });
 
     expect(history.location.pathname).toBe('/drinks/178319/in-progress');
-    // const carousel = screen.getByRole('article', { name: /recomendations-carousel/i });
-    // const carouselBackButton = screen.getByRole('button', {  name: /back/i});
-    // const carouselNextButton = screen.getByRole('button', {  name: /next/i});
-    // const recomendationsCard1 = screen.getByTestId('0-recommendation-card');
-    // const recomendationsCard4 = screen.getByTestId('3-recommendation-card');
-    // const recomendationsCard5 = screen.getByTestId('4-recommendation-card');
   });
 });
