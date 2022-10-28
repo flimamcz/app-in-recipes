@@ -45,7 +45,7 @@ export default function SearchBar() {
         return global.alert('Your search must have only 1 (one) character');
       }
       return IngredientAPI(searchInput.search, 'search', 'f', path);
-    default: return [];
+    default:
     }
   };
   const handleSearchClick = () => {
