@@ -7,14 +7,16 @@ import AppContext from '../context/AppContext';
 import FilterForm from '../components/FilterForm';
 
 function FavoriteRecipes() {
-  const { favoriteRecipes } = useContext(AppContext);
+  const { favoriteRecipes, storageFilter } = useContext(AppContext);
   return (
     <div>
       <Header title="Favorite Recipes" searchImage={ false } />
       <FilterForm />
-      {favoriteRecipes.map((recipe, index) => (
-        <CardFavorite key={ uuidv4() } recipe={ recipe } index={ index } />
-      ))}
+      {favoriteRecipes
+        .filter(({ type }) => ((storageFilter === '') ? true : type === storageFilter))
+        .map((recipe, index) => (
+          <CardFavorite key={ uuidv4() } recipe={ recipe } index={ index } />
+        ))}
       <Footer />
     </div>
   );

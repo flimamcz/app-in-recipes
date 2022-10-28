@@ -9,7 +9,7 @@ function ShareButton({ recipeData: { id, type }, indexTest }) {
   const [copyMessage, setCopyMessage] = useState(false);
   const handleUrl = () => {
     const href = window.location.href.split('/');
-    if (pathname === '/favorite-recipes') {
+    if (pathname === '/favorite-recipes' || pathname === '/done-recipes') {
       const urlLetterS = `${href[0]}//${href[2]}/${type}s/${id}`;
       copy(urlLetterS);
     } else {

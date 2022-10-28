@@ -5,7 +5,6 @@ function FilterForm() {
   const { setStorageFilter } = useContext(AppContext);
 
   const handleClick = ({ target: { name } }) => {
-    console.log(name);
     if (name === 'all') {
       setStorageFilter('');
     } else (setStorageFilter(name));
