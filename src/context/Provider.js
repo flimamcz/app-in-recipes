@@ -17,6 +17,7 @@ function Provider({ children }) {
     filter: '',
   });
   const [checkedIngredients, setCheckedIngredients] = useState([]);
+  const [storageFilter, setStorageFilter] = useState('');
 
   const HandleChangeSearch = ({ target }) => {
     const { name, value } = target;
@@ -60,6 +61,8 @@ function Provider({ children }) {
       handleCheck,
       setFavoriteRecipes,
       favoriteRecipes,
+      storageFilter,
+      setStorageFilter,
     }),
     [
       email,
@@ -71,7 +74,8 @@ function Provider({ children }) {
       categoriesFilter,
       searchInput,
       favoriteRecipes,
-      checkedIngredients],
+      checkedIngredients,
+      storageFilter],
   );
 
   return (
