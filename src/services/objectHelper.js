@@ -102,7 +102,6 @@ export const buildFavoriteRecipes = ({
   alcoholicOrNot,
   name,
   image }) => ({
-
   id,
   type: type.slice(0, lastChar),
   nationality,
