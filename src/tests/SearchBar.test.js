@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, screen } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderPath from './helpers/renderPath';
 import App from '../App';
@@ -115,30 +115,41 @@ describe('Testa componente SearchBar em Meals', () => {
     expect(arrabiata).toBeInTheDocument();
   }, 8000);
 
-  // test('testa alert para 0 receitas', async () => {
-  //   global.fetch = jest.fn(fetch);
-  //   const { history } = renderPath(<App />);
-  //   act(() => {
-  //     history.push('/meals');
-  //   });
-  //   const radioName = screen.getByRole('radio', {
-  //     name: /name/i,
-  //   });
-  //   const searchBtn = screen.getByRole('button', {
-  //     name: /pesquisar/i,
-  //   });
-  //   const searchIconBtn = screen.getByRole('button', {
-  //     name: /search icon/i,
-  //   });
-  //   userEvent.click(searchIconBtn);
-  //   const searchInput = screen.getByRole('textbox');
-  //   userEvent.type(searchInput, 'xablau');
-  //   userEvent.click(radioName);
-  //   expect(radioName).toBeChecked();
-  //   userEvent.click(searchBtn);
-  //   global.alert = jest.spyOn(global, 'alert');
-  //   expect(global.alert).toHaveBeenCalled(1);
-  // });
+  test('testa alert para 0 receitas', async () => {
+    global.fetch = jest.fn(fetch);
+    global.alert = jest.spyOn(global, 'alert');
+    global.alert.mockImplementation(() => {});
+    const { history } = renderPath(<App />);
+    act(() => {
+      history.push('/meals');
+    });
+    const radioName = screen.getByRole('radio', {
+      name: /name/i,
+    });
+    const searchBtn = screen.getByRole('button', {
+      name: /pesquisar/i,
+    });
+    const searchIconBtn = screen.getByRole('button', {
+      name: /search icon/i,
+    });
+    userEvent.click(searchIconBtn);
+    const searchInput = screen.getByRole('textbox');
+    userEvent.type(searchInput, 'xablau');
+    userEvent.click(radioName);
+    expect(radioName).toBeChecked();
+    userEvent.click(searchBtn);
+    await waitFor(() => {
+      expect(global.alert).toHaveBeenCalled();
+    });
+    const radioLetter = screen.getByRole('radio', {
+      name: /first letter/i,
+    });
+    userEvent.click(radioLetter);
+    userEvent.click(searchBtn);
+    await waitFor(() => {
+      expect(global.alert).toHaveBeenCalled();
+    });
+  });
 });
 describe('Testa componente SearchBar em drinks', () => {
   test('teste os componentes SearchBar em /drinks e faz uma pesquisa de ingrediente', async () => {
@@ -183,7 +194,7 @@ describe('Testa componente SearchBar em drinks', () => {
     userEvent.click(radioIng);
     expect(radioIng).toBeChecked();
     userEvent.click(searchBtn);
-    expect(global.fetch).toBeCalledTimes(4);
+    expect(global.fetch).toBeCalledTimes(5);
     const florida = await screen.findByRole('heading', {
       name: /151 Florida Bushwacker/i,
     }, { timeout: 3000 });
@@ -249,4 +260,39 @@ describe('Testa componente SearchBar em drinks', () => {
     }, { timeout: 3000 });
     expect(Aquamarine).toBeInTheDocument();
   }, 8000);
+  test('testa alert para 0 receitas', async () => {
+    global.fetch = jest.fn(fetch);
+    global.alert = jest.spyOn(global, 'alert');
+    global.alert.mockImplementation(() => {});
+    const { history } = renderPath(<App />);
+    act(() => {
+      history.push('/drinks');
+    });
+    const radioName = screen.getByRole('radio', {
+      name: /name/i,
+    });
+    const searchBtn = screen.getByRole('button', {
+      name: /pesquisar/i,
+    });
+    const searchIconBtn = screen.getByRole('button', {
+      name: /search icon/i,
+    });
+    userEvent.click(searchIconBtn);
+    const searchInput = screen.getByRole('textbox');
+    userEvent.type(searchInput, 'xablau');
+    userEvent.click(radioName);
+    expect(radioName).toBeChecked();
+    userEvent.click(searchBtn);
+    await waitFor(() => {
+      expect(global.alert).toHaveBeenCalled();
+    });
+    const radioLetter = screen.getByRole('radio', {
+      name: /first letter/i,
+    });
+    userEvent.click(radioLetter);
+    userEvent.click(searchBtn);
+    await waitFor(() => {
+      expect(global.alert).toHaveBeenCalled();
+    });
+  });
 });
