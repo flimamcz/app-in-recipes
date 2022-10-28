@@ -17,7 +17,7 @@ describe('Testa componente Recipes', () => {
       history.push('/meals');
     });
 
-    expect(screen.getByText(/recipes/i)).toBeInTheDocument();
+    expect(screen.getByText(/meals/i)).toBeInTheDocument();
     const iconSearch = screen.getByRole('img', { name: /search icon/i });
     const buttonProfile = screen.getByRole('button', { name: /profile/i });
     expect(buttonProfile).toBeInTheDocument();

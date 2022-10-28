@@ -17,6 +17,7 @@ function IngredientItem({ ingredient, index, handleCheck, checkedIngredients }) 
 
   return (
     <li
+      name="ingredient-name-and-measure"
       data-testid={ `${index}-ingredient-name-and-measure` }
     >
       {(page === 'IN_PROGRESS') ? (

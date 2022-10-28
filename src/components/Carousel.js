@@ -28,7 +28,10 @@ function Carousel(props) {
     aIndex === carouselIndex || aIndex === carouselIndex + 1);
 
   return (
-    <article className="container-fluid d-flex align-items-center">
+    <article
+      name="recomendations-carousel"
+      className="container-fluid d-flex align-items-center"
+    >
       <button
         className="btn btn-primary mx-2"
         type="button"
@@ -42,6 +45,7 @@ function Carousel(props) {
           <div
             className="mx-2 text-center"
             hidden={ !handleHidden(i) }
+            name={ name }
             key={ name }
             data-testid={ `${i}-recommendation-card` }
           >
