@@ -62,7 +62,6 @@ export const removeInProgressRecipe = ({ type, id }) => {
       .fromEntries(Object
         .entries(savedInProgressRecipes[type])
         .filter((key) => key[0] !== id));
-    console.log(removeDoneRecipe);
     const handleInfo = {
       ...savedInProgressRecipes,
       [type]: removeDoneRecipe,

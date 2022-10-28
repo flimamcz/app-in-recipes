@@ -7,7 +7,7 @@ import {
 const lastChar = -1;
 
 // Função baseada na do site: https://masteringjs.io/tutorials/fundamentals/filter-key#:~:text=JavaScript%20objects%20don't%20have,()%20function%20as%20shown%20below.
-const filterKeys = (myObj, valueToFilter) => {
+export const filterKeys = (myObj, valueToFilter) => {
   const fKeys = Object.values(Object.fromEntries(Object
     .entries(myObj).filter(([key]) => key.includes(valueToFilter))));
 
@@ -102,7 +102,6 @@ export const buildFavoriteRecipes = ({
   alcoholicOrNot,
   name,
   image }) => ({
-
   id,
   type: type.slice(0, lastChar),
   nationality,
