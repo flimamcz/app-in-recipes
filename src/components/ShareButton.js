@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import copy from 'clipboard-copy';
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 
-function ShareButton() {
+function ShareButton({ recipeData: { id, type }, indexTest }) {
+  const { location: { pathname } } = useHistory();
   const [copyMessage, setCopyMessage] = useState(false);
-  const history = useHistory();
-
   const handleUrl = () => {
-    const isInProgressPage = history.location.pathname.split('/')[3];
-    const url = (isInProgressPage) ? (
-      (window.location.href).split('/in-progress')[0]) : (window.location.href);
-    copy(url);
+    const href = window.location.href.split('/');
+    if (pathname === '/favorite-recipes') {
+      const urlLetterS = `${href[0]}//${href[2]}/${type}s/${id}`;
+      copy(urlLetterS);
+    } else {
+      const url = `${href[0]}//${href[2]}/${type}/${id}`;
+      copy(url);
+    }
     setCopyMessage(true);
   };
 
   return (
     <div>
-
       <button
         type="button"
-        data-testid="share-btn"
+        data-testid={ indexTest >= 0 ? `${indexTest}-horizontal-share-btn` : 'share-btn' }
         src={ shareIcon }
         onClick={ handleUrl }
       >
@@ -30,5 +33,13 @@ function ShareButton() {
     </div>
   );
 }
+
+ShareButton.propTypes = {
+  indexTest: PropTypes.number.isRequired,
+  recipeData: PropTypes.shape({
+    id: PropTypes.string,
+    type: PropTypes.string,
+  }).isRequired,
+};
 
 export default ShareButton;

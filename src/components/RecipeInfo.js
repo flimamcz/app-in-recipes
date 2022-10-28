@@ -44,7 +44,7 @@ function RecipeInfo(props) {
         />
         <div className="d-flex">
           <FavoriteButton recipeData={ recipeData } />
-          <ShareButton />
+          <ShareButton recipeData={ recipeData } />
         </div>
         <h3 data-testid="recipe-title">{ name }</h3>
         {(type === 'drinks') ? (

@@ -55,7 +55,6 @@ export default function SearchBar() {
 
   return (
     <div>
-      <h3>SearchBar</h3>
       <label htmlFor="ingredient">
         <input
           type="radio"

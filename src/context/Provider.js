@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
+import { getFavoriteRecipes } from '../services/localStorageHelper';
 
 function Provider({ children }) {
   const [email, setEmail] = useState('');
@@ -10,6 +11,7 @@ function Provider({ children }) {
   const [loading, setLoading] = useState('true');
   const [recipes, setRecipes] = useState([]);
   const [categoriesFilter, setCategoriesFilter] = useState([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [searchInput, setSearchInput] = useState({
     search: '',
     filter: '',
@@ -29,6 +31,10 @@ function Provider({ children }) {
         .filter((item) => item !== Number(id)));
     }
   };
+
+  useEffect(() => {
+    setFavoriteRecipes(getFavoriteRecipes());
+  }, [setFavoriteRecipes]);
 
   const contextValue = useMemo(
     () => ({
@@ -52,6 +58,8 @@ function Provider({ children }) {
       checkedIngredients,
       setCheckedIngredients,
       handleCheck,
+      setFavoriteRecipes,
+      favoriteRecipes,
     }),
     [
       email,
@@ -62,6 +70,7 @@ function Provider({ children }) {
       recipes,
       categoriesFilter,
       searchInput,
+      favoriteRecipes,
       checkedIngredients],
   );
 
