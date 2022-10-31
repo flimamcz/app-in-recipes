@@ -12,9 +12,6 @@ describe('Testa componente SearchBar em Meals', () => {
     act(() => {
       history.push('/meals');
     });
-    const searchBarTitle = screen.getByRole('heading', {
-      name: /searchbar/i,
-    });
     const radioIng = screen.getByRole('radio', {
       name: /ingredient/i,
     });
@@ -36,7 +33,6 @@ describe('Testa componente SearchBar em Meals', () => {
     expect(ingText).toBeInTheDocument();
     expect(nameText).toBeInTheDocument();
     expect(letterText).toBeInTheDocument();
-    expect(searchBarTitle).toBeInTheDocument();
     expect(radioIng).toBeInTheDocument();
     expect(radioName).toBeInTheDocument();
     expect(radioLetter).toBeInTheDocument();
@@ -158,9 +154,6 @@ describe('Testa componente SearchBar em drinks', () => {
     act(() => {
       history.push('/drinks');
     });
-    const searchBarTitle = screen.getByRole('heading', {
-      name: /searchbar/i,
-    });
     const radioIng = screen.getByRole('radio', {
       name: /ingredient/i,
     });
@@ -182,7 +175,6 @@ describe('Testa componente SearchBar em drinks', () => {
     expect(ingText).toBeInTheDocument();
     expect(nameText).toBeInTheDocument();
     expect(letterText).toBeInTheDocument();
-    expect(searchBarTitle).toBeInTheDocument();
     expect(radioIng).toBeInTheDocument();
     expect(radioName).toBeInTheDocument();
     expect(radioLetter).toBeInTheDocument();
