@@ -10,7 +10,11 @@ function Profile() {
   console.log(emailProfile);
   const { setEmail } = useContext(AppContext);
 
-  const timeOut = 360;
+  const handleLogout = () => {
+    localStorage.clear();
+    setEmail('');
+    history.push('/');
+  };
 
   useEffect(() => {
     const userEmail = JSON.parse(localStorage.getItem('user'));
@@ -26,9 +30,7 @@ function Profile() {
         type="button"
         data-testid="profile-done-btn"
         name="done-btn"
-        onClick={ () => {
-          setTimeout(() => history.push('/done-recipes'), timeOut);
-        } }
+        onClick={ () => (history.push('/done-recipes')) }
       >
         Done Recipes
       </button>
@@ -36,9 +38,7 @@ function Profile() {
         type="button"
         data-testid="profile-favorite-btn"
         name="favorite-btn"
-        onClick={ () => {
-          setTimeout(() => history.push('/favorite-recipes'), timeOut);
-        } }
+        onClick={ () => (history.push('/favorite-recipes')) }
       >
         Favorite Recipes
       </button>
@@ -46,11 +46,7 @@ function Profile() {
         type="button"
         data-testid="profile-logout-btn"
         name="profile-btn"
-        onClick={ () => {
-          localStorage.clear();
-          setEmail('');
-          setTimeout(() => history.push('/'), timeOut);
-        } }
+        onClick={ handleLogout }
       >
         Logout
       </button>
