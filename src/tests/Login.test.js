@@ -14,7 +14,7 @@ describe('Testar componentes da tela de Login', () => {
   // const emailInput = screen.getByTestId('email-input');
   // const password = screen.getByTestId('password-input');
   // const btnLogin = screen.getByTestId('login-submit-btn');
-  it('verifica se os inputs e o botão está na tela', () => {
+  it('verifica se renderiza para /Meals', () => {
     const { history } = renderPath(<App />);
     act(() => {
       history.push('/meals');
