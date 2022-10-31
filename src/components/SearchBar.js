@@ -6,12 +6,12 @@ import {
 import AppContext from '../context/AppContext';
 
 export default function SearchBar() {
-  const { HandleChangeSearch, searchInput, setRecipes } = useContext(AppContext);
+  const { handleChangeSearch, searchInput, setRecipes } = useContext(AppContext);
   const history = useHistory();
   const { location: { pathname } } = history;
   const max = 12;
 
-  const IngredientAPI = async (ele, type, letter, db) => {
+  const ingredientAPI = async (ele, type, letter, db) => {
     const data = await fetchIngredientFilter(ele, type, letter, db);
     if (db === 'meal') {
       if (!data.meals) {
@@ -37,14 +37,14 @@ export default function SearchBar() {
   const barFilter = (path) => {
     switch (searchInput.filter) {
     case 'ingredient':
-      return IngredientAPI(searchInput.search, 'filter', 'i', path);
+      return ingredientAPI(searchInput.search, 'filter', 'i', path);
     case 'Name':
-      return IngredientAPI(searchInput.search, 'search', 's', path);
+      return ingredientAPI(searchInput.search, 'search', 's', path);
     case 'First letter':
       if (searchInput.search.length > 1) {
         return global.alert('Your search must have only 1 (one) character');
       }
-      return IngredientAPI(searchInput.search, 'search', 'f', path);
+      return ingredientAPI(searchInput.search, 'search', 'f', path);
     default:
     }
   };
@@ -54,7 +54,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div>
+    <form>
       <label htmlFor="ingredient">
         <input
           type="radio"
@@ -62,7 +62,7 @@ export default function SearchBar() {
           value="ingredient"
           name="filter"
           data-testid="ingredient-search-radio"
-          onChange={ HandleChangeSearch }
+          onChange={ handleChangeSearch }
         />
         Ingredient
       </label>
@@ -73,7 +73,7 @@ export default function SearchBar() {
           value="Name"
           name="filter"
           data-testid="name-search-radio"
-          onChange={ HandleChangeSearch }
+          onChange={ handleChangeSearch }
         />
         Name
       </label>
@@ -84,7 +84,7 @@ export default function SearchBar() {
           value="First letter"
           name="filter"
           data-testid="first-letter-search-radio"
-          onChange={ HandleChangeSearch }
+          onChange={ handleChangeSearch }
         />
         First letter
       </label>
@@ -95,6 +95,6 @@ export default function SearchBar() {
       >
         Pesquisar
       </button>
-    </div>
+    </form>
   );
 }

@@ -20,7 +20,7 @@ function ShareButton({ recipeData: { id, type }, indexTest }) {
   };
 
   return (
-    <div>
+    <section>
       <button
         type="button"
         data-testid={ indexTest >= 0 ? `${indexTest}-horizontal-share-btn` : 'share-btn' }
@@ -30,7 +30,7 @@ function ShareButton({ recipeData: { id, type }, indexTest }) {
         <img src={ shareIcon } alt="shareImage" />
       </button>
       { copyMessage && <span>Link copied!</span>}
-    </div>
+    </section>
   );
 }
 

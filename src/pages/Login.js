@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 
-// import PropTypes from 'prop-types';
-
 function Login() {
   const {
     setEmail,
@@ -16,7 +14,6 @@ function Login() {
   const history = useHistory();
 
   const validaEmailPassword = useCallback(() => {
-    // const { email, password } = user;
     const CHARAC_MIN = 6;
     const regex = /\S+@\S+\.\S+/;
     const validaEmail = regex.test(email);
@@ -33,7 +30,6 @@ function Login() {
     setPassword(target.value);
   };
   const clickSubmit = useCallback(() => {
-    // const emailEstorage = { email };
     localStorage.setItem('mealsToken', '1');
     localStorage.setItem('cocktaislToken', '1');
     localStorage.setItem('user', JSON.stringify({ email }));
@@ -45,39 +41,39 @@ function Login() {
   }, [email, password, validaEmailPassword]);
 
   return (
-    <section>
+    <main>
       <form>
         <h2 className="title-login">Login</h2>
-        <section className="section-input-login">
+        <label htmlFor="email">
           <input
+            id="email"
             type="email"
-            // value={ email }
             data-testid="email-input"
             placeholder="Digite seu email"
             onChange={ handleChangeEmail }
           />
+        </label>
+        <label htmlFor="password">
           <input
+            className="w-100"
             type="password"
             data-testid="password-input"
             onChange={ handleChangePassword }
             placeholder="Digite sua senha"
-            // value={ password }
           />
-        </section>
-        <section className="section-button-login">
-          <button
-            type="button"
-            className="btn-login"
-            data-testid="login-submit-btn"
-            disabled={ isDisabled }
-            onClick={ clickSubmit }
-          >
-            Enter
-          </button>
-        </section>
+        </label>
+        <button
+          type="button"
+          className="btn-login"
+          data-testid="login-submit-btn"
+          disabled={ isDisabled }
+          onClick={ clickSubmit }
+        >
+          Enter
+        </button>
 
       </form>
-    </section>
+    </main>
 
   );
 }

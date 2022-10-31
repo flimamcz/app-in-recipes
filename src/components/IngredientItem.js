@@ -24,7 +24,7 @@ function IngredientItem({ ingredient, index, handleCheck, checkedIngredients }) 
         <label
           data-testid={ `${index}-ingredient-step` }
           htmlFor={ index }
-          className={ checkChecked() ? 'selected' : '' }
+          className={ checkChecked() && 'selected' }
         >
           <input
             id={ index }

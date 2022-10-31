@@ -68,7 +68,7 @@ function Recipes({ match }) {
   };
 
   return (
-    <div>
+    <main>
       {match.path === '/meals' ? (
         <Header title="Meals" searchImage />
       ) : (
@@ -102,7 +102,7 @@ function Recipes({ match }) {
         <Loading />
       )}
       <Footer />
-    </div>
+    </main>
   );
 }
 

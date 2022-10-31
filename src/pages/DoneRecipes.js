@@ -17,7 +17,7 @@ function DoneRecipes() {
   }, [setDoneRecipes]);
 
   return (
-    <div>
+    <main>
       <Header title="Done Recipes" searchImage={ false } />
       <FilterForm />
       {doneRecipes
@@ -26,7 +26,7 @@ function DoneRecipes() {
           <CardFavorite key={ uuidv4() } recipe={ recipe } index={ index } />
         ))}
       <Footer />
-    </div>
+    </main>
   );
 }
 

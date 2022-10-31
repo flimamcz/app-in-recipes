@@ -18,8 +18,7 @@ export default function Header({ title, searchImage }) {
   };
 
   return (
-    <div>
-      {' '}
+    <header>
       <button
         type="button"
         onClick={ profileClick }
@@ -28,14 +27,17 @@ export default function Header({ title, searchImage }) {
       </button>
       <h1 data-testid="page-title">{title}</h1>
       {search && (
-        <input
-          name="search"
-          data-testid="search-input"
-          type="text"
-          placeholder="Search"
-          value={ searchInput.search }
-          onChange={ HandleChangeSearch }
-        />
+        <label htmlFor="search">
+          <input
+            id="search"
+            name="search"
+            data-testid="search-input"
+            type="text"
+            placeholder="Search"
+            value={ searchInput.search }
+            onChange={ HandleChangeSearch }
+          />
+        </label>
       )}
 
       {searchImage && (
@@ -48,7 +50,7 @@ export default function Header({ title, searchImage }) {
         </button>
       )}
       <SearchBar />
-    </div>
+    </header>
   );
 }
 Header.propTypes = {

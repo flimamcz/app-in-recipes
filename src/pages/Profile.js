@@ -4,10 +4,10 @@ import Footer from '../components/Footer';// import PropTypes from 'prop-types';
 
 function Profile() {
   return (
-    <div>
+    <main>
       <Header title="Profile" />
       <Footer />
-    </div>
+    </main>
   );
 }
 

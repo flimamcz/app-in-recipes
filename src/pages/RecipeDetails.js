@@ -28,9 +28,7 @@ function RecipeDetails({ location: { pathname } }) {
     <section>
       <RecipeInfo recipeData={ recipeData } />
       <Carousel recommendationList={ recommendationList } />
-      <DetailsPageButton
-        recipeData={ recipeData }
-      />
+      <DetailsPageButton recipeData={ recipeData } />
     </section>
   );
 
