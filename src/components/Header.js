@@ -8,7 +8,7 @@ import AppContext from '../context/AppContext';
 
 export default function Header({ title, searchImage }) {
   const history = useHistory();
-  const { HandleChangeSearch, searchInput } = useContext(AppContext);
+  const { handleChangeSearch, searchInput } = useContext(AppContext);
   const [search, setSearch] = useState(false);
   const searchClick = () => {
     setSearch(!search);
@@ -35,7 +35,7 @@ export default function Header({ title, searchImage }) {
             type="text"
             placeholder="Search"
             value={ searchInput.search }
-            onChange={ HandleChangeSearch }
+            onChange={ handleChangeSearch }
           />
         </label>
       )}
