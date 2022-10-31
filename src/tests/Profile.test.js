@@ -7,6 +7,14 @@ import renderPath from './helpers/renderPath';
 describe('Testar componentes da tela Profile.js', () => {
   it('testa botoes e funcionaçidades', () => {
     const { history } = renderPath(<App />);
+    const loginInput = screen.getByRole('textbox');
+    const passwordInput = screen.getByPlaceholderText(/digite sua senha/i);
+    const enterBtn = screen.getByRole('button', {
+      name: /enter/i,
+    });
+    userEvent.type(loginInput, 'trybe@teste.com');
+    userEvent.type(passwordInput, 'jdeiwjdiew');
+    userEvent.click(enterBtn);
     act(() => {
       history.push('/profile');
     });
@@ -26,18 +34,23 @@ describe('Testar componentes da tela Profile.js', () => {
 
     expect(history.location.pathname).toBe('/done-recipes');
 
-    history.push('/profile');
+    act(() => {
+      history.push('/profile');
+    });
 
-  //   expect(history.location.pathname).toBe('/profile');
+    expect(history.location.pathname).toBe('/profile');
+    const Favorite = screen.getByTestId('profile-favorite-btn');
+    userEvent.click(Favorite);
 
-  //   userEvent.click(btnFavorite);
+    expect(history.location.pathname).toBe('/favorite-recipes');
 
-  //   expect(history.location.pathname).toBe('/favorite-recipes');
+    act(() => {
+      history.push('/profile');
+    });
 
-  //   history.push('/profile');
-
-  //   expect(history.location.pathname).toBe('/profile');
-  //   userEvent.click(btnLogout);
-  //   expect(history.location.pathname).toBe('/');
-  // });
+    expect(history.location.pathname).toBe('/profile');
+    const Logout = screen.getByTestId('profile-logout-btn');
+    userEvent.click(Logout);
+    expect(history.location.pathname).toBe('/');
+  });
 });

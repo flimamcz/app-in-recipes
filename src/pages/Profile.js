@@ -7,7 +7,6 @@ import AppContext from '../context/AppContext';
 function Profile() {
   const history = useHistory();
   const [emailProfile, setEmailProfile] = useState('');
-  console.log(emailProfile);
   const { setEmail } = useContext(AppContext);
 
   const handleLogout = () => {
