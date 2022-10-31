@@ -19,7 +19,7 @@ function Profile() {
     }
   }, []);
   return (
-    <div>
+    <main>
       <Header title="Profile" />
       <h3 data-testid="profile-email">{emailProfile.email}</h3>
       <button
@@ -55,7 +55,7 @@ function Profile() {
         Logout
       </button>
       <Footer />
-    </div>
+    </main>
   );
 }
 

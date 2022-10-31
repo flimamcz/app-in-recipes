@@ -19,7 +19,7 @@ function Provider({ children }) {
   const [checkedIngredients, setCheckedIngredients] = useState([]);
   const [storageFilter, setStorageFilter] = useState('');
 
-  const HandleChangeSearch = ({ target }) => {
+  const handleChangeSearch = ({ target }) => {
     const { name, value } = target;
     setSearchInput((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -55,7 +55,7 @@ function Provider({ children }) {
       categoriesFilter,
       searchInput,
       setSearchInput,
-      HandleChangeSearch,
+      handleChangeSearch,
       checkedIngredients,
       setCheckedIngredients,
       handleCheck,

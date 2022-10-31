@@ -9,7 +9,7 @@ import FilterForm from '../components/FilterForm';
 function FavoriteRecipes() {
   const { favoriteRecipes, storageFilter } = useContext(AppContext);
   return (
-    <div>
+    <main>
       <Header title="Favorite Recipes" searchImage={ false } />
       <FilterForm />
       {favoriteRecipes
@@ -18,7 +18,7 @@ function FavoriteRecipes() {
           <CardFavorite key={ uuidv4() } recipe={ recipe } index={ index } />
         ))}
       <Footer />
-    </div>
+    </main>
   );
 }
 
