@@ -40,10 +40,12 @@ ShareButton.defaultProps = {
 
 ShareButton.propTypes = {
   testid: PropTypes.string,
+  }
+
   recipeData: PropTypes.shape({
     id: PropTypes.string,
     type: PropTypes.string,
-  }).isRequired,
-};
+  }),
+}.isRequired;
 
 export default ShareButton;
