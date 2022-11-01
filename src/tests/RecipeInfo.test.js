@@ -95,7 +95,7 @@ describe('Testa o componente RecipeDetails', () => {
       userEvent.click(secondIngredient);
     });
     act(() => {
-      userEvent.click(thirdIngredient );
+      userEvent.click(thirdIngredient);
     });
     expect(finishBtn).not.toBeDisabled();
 
