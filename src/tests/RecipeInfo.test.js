@@ -74,5 +74,35 @@ describe('Testa o componente RecipeDetails', () => {
     });
 
     expect(history.location.pathname).toBe('/drinks/178319/in-progress');
+
+    const firstIngredient = await screen.findByRole('checkbox', { name: /2 oz hpnotiq/i });
+    const secondIngredient = await screen.findByRole('checkbox', { name: /1 oz pineapple juice/i });
+    const thirdIngredient = await screen.findByRole('checkbox', { name: /1 oz banana liqueur/i });
+
+    const finishBtn = await screen.findByRole('button', { name: /finish recipe/i });
+
+    expect(firstIngredient).toBeInTheDocument();
+    expect(secondIngredient).toBeInTheDocument();
+    expect(thirdIngredient).toBeInTheDocument();
+    expect(finishBtn).toBeInTheDocument();
+    expect(finishBtn).toBeDisabled();
+
+    act(() => {
+      userEvent.click(firstIngredient);
+    });
+
+    act(() => {
+      userEvent.click(secondIngredient);
+    });
+    act(() => {
+      userEvent.click(thirdIngredient);
+    });
+    expect(finishBtn).not.toBeDisabled();
+
+    act(() => {
+      userEvent.click(finishBtn);
+    });
+
+    expect(history.location.pathname).toBe('/done-recipes');
   });
 });
