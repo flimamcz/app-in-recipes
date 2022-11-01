@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 
-function ShareButton({ recipeData: { id, type }, indexTest }) {
+function ShareButton({ recipeData: { id, type }, testid }) {
   const { location: { pathname } } = useHistory();
   const [copyMessage, setCopyMessage] = useState(false);
   const handleUrl = () => {
@@ -23,7 +23,7 @@ function ShareButton({ recipeData: { id, type }, indexTest }) {
     <section>
       <button
         type="button"
-        data-testid={ indexTest >= 0 ? `${indexTest}-horizontal-share-btn` : 'share-btn' }
+        data-testid={ testid }
         src={ shareIcon }
         onClick={ handleUrl }
       >
@@ -34,8 +34,12 @@ function ShareButton({ recipeData: { id, type }, indexTest }) {
   );
 }
 
+ShareButton.defaultProps = {
+  testid: 'share-btn',
+};
+
 ShareButton.propTypes = {
-  indexTest: PropTypes.number.isRequired,
+  testid: PropTypes.string,
   recipeData: PropTypes.shape({
     id: PropTypes.string,
     type: PropTypes.string,

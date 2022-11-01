@@ -28,7 +28,7 @@ function CardFavorite({ recipe, index }) {
         <p data-testid={ `${index}-horizontal-name` }>{name}</p>
       </Link>
       {type === 'meal' && (
-        <p span data-testid={ `${index}-horizontal-top-text` }>
+        <p data-testid={ `${index}-horizontal-top-text` }>
           {nationality}
           {' '}
           -
@@ -57,7 +57,7 @@ function CardFavorite({ recipe, index }) {
       { (doneDate !== undefined) && (
         <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>)}
       <FavoriteButton recipeData={ recipe } indexTest={ index } />
-      <ShareButton recipeData={ recipe } indexTest={ index } />
+      <ShareButton recipeData={ recipe } testid={ `${index}-horizontal-share-btn` } />
     </div>
   );
 }
