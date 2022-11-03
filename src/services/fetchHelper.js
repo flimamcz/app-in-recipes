@@ -7,12 +7,6 @@ export const fetchMealRecommendation = async () => {
   return meals;
 };
 
-export const fetchIngredientImage = async (ingredientName) => {
-  const response = await fetch(`https://www.themealdb.com/images/ingredients/${ingredientName}-Small.png
-  `);
-  const { meals } = await response.json();
-  return meals;
-};
 export const fetchMealById = async (mealId) => {
   const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`);
   const { meals } = await response.json();

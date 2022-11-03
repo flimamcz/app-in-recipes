@@ -1,6 +1,11 @@
 import React, { useContext, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
+import SendIcon from '@mui/icons-material/Send';
+import Button from '@mui/material/Button';
+import { TextField, Box, Stack, Typography } from '@mui/material';
 import AppContext from '../context/AppContext';
+import loginLogo from '../images/loginLogo.svg';
+import loginImage from '../images/loginImage.svg';
 
 function Login() {
   const {
@@ -41,39 +46,69 @@ function Login() {
   }, [email, password, validaEmailPassword]);
 
   return (
-    <main>
-      <form>
-        <h2 className="title-login">Login</h2>
-        <label htmlFor="email">
-          <input
-            id="email"
-            type="email"
-            data-testid="email-input"
-            placeholder="Digite seu email"
-            onChange={ handleChangeEmail }
-          />
-        </label>
-        <label htmlFor="password">
-          <input
-            className="w-100"
-            type="password"
-            data-testid="password-input"
-            onChange={ handleChangePassword }
-            placeholder="Digite sua senha"
-          />
-        </label>
-        <button
+    <Box
+      component="main"
+      sx={ {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        minHeight: '100vh',
+        background: 'linear-gradient(#41197F 50%, #F5F5F5 50%)',
+      } }
+    >
+      <img width={ 198 } src={ loginLogo } alt="login-logo" />
+
+      <img className="tomato-image" src={ loginImage } alt="login-logo" />
+      <Stack
+        spacing={ 1 }
+        component="form"
+        sx={ {
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+        } }
+      >
+        <Typography
+          variant="h5"
+          color="secondary"
+        >
+          LOGIN
+        </Typography>
+
+        <TextField
+          id="email"
+          type="email"
+          label="Email"
+          data-testid="email-input"
+          onChange={ handleChangeEmail }
+          variant="outlined"
+          size="small"
+        />
+        <TextField
+          id="password"
+          type="password"
+          label="Senha"
+          data-testid="password-input"
+          onChange={ handleChangePassword }
+          variant="outlined"
+          size="small"
+        />
+        <Button
           type="button"
           className="btn-login"
           data-testid="login-submit-btn"
           disabled={ isDisabled }
           onClick={ clickSubmit }
+          variant="contained"
+          endIcon={ <SendIcon /> }
+          fullWidth
         >
           Enter
-        </button>
+        </Button>
 
-      </form>
-    </main>
+      </Stack>
+    </Box>
 
   );
 }
