@@ -40,7 +40,13 @@ function RecipeDetails({ location: { pathname } }) {
   );
 
   return (
-    <Box component="main" sx={ { backgroundColor: '#F5F5F5' } }>
+    <Box
+      component="main"
+      sx={ {
+        backgroundColor: '#F5F5F5',
+        display: 'flex',
+        flexDirection: 'column' } }
+    >
       { (loading) ? renderLoading() : renderDetails() }
     </Box>
   );

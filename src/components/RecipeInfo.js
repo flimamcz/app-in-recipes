@@ -164,7 +164,6 @@ function RecipeInfo(props) {
           </Typography>
           <iframe
             data-testid="video"
-            width="100%"
             src={ video }
             title="YouTube video player"
             frameBorder="0"
