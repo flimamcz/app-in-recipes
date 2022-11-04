@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import copy from 'clipboard-copy';
 import { useHistory } from 'react-router-dom';
+import { IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
-import shareIcon from '../images/shareIcon.svg';
+import ShareIcon from '@mui/icons-material/Share';
 
 function ShareButton({ recipeData: { id, type }, testid }) {
   const { location: { pathname } } = useHistory();
@@ -21,14 +22,14 @@ function ShareButton({ recipeData: { id, type }, testid }) {
 
   return (
     <section>
-      <button
+      <IconButton
         type="button"
         data-testid={ testid }
-        src={ shareIcon }
         onClick={ handleUrl }
+        color="primary"
       >
-        <img src={ shareIcon } alt="shareImage" />
-      </button>
+        <ShareIcon />
+      </IconButton>
       { copyMessage && <span>Link copied!</span>}
     </section>
   );

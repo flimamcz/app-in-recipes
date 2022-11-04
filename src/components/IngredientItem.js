@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Checkbox, FormControlLabel, ListItem } from '@mui/material';
 
 function IngredientItem({ ingredient, index, handleCheck, checkedIngredients }) {
   const [page, setPage] = useState('');
@@ -16,31 +17,29 @@ function IngredientItem({ ingredient, index, handleCheck, checkedIngredients }) 
   const checkChecked = () => checkedIngredients.some((item) => item === index);
 
   return (
-    <li
+    <ListItem
       name="ingredient-name-and-measure"
       data-testid={ `${index}-ingredient-name-and-measure` }
     >
       {(page === 'IN_PROGRESS') ? (
-        <label
-          data-testid={ `${index}-ingredient-step` }
-          htmlFor={ index }
+        <FormControlLabel
           className={ checkChecked() ? 'selected' : '' }
-        >
-          <input
-            id={ index }
-            type="checkbox"
-            checked={ checkChecked() }
-            onChange={ handleCheck }
-          />
-          <span>
-            {ingredient}
-          </span>
-        </label>
+          data-testid={ `${index}-ingredient-step` }
+          control={
+            <Checkbox
+              size="small"
+              id={ index.toString() }
+              checked={ checkChecked() }
+              onChange={ handleCheck }
+            />
+          }
+          label={ ingredient }
+        />
       ) : (
         <span>
           {ingredient}
         </span>)}
-    </li>
+    </ListItem>
   );
 }
 

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Box, IconButton, Paper, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 function Carousel(props) {
   const [carouselIndex, setCarouselIndex] = useState(0);
@@ -28,46 +31,57 @@ function Carousel(props) {
     aIndex === carouselIndex || aIndex === carouselIndex + 1);
 
   return (
-    <article
-      name="recomendations-carousel"
-      className="container-fluid d-flex align-items-center"
+    <Box
+      component="section"
+      sx={ {
+        margin: '5px 10px 50px 10px' } }
     >
-      <button
-        className="btn btn-primary mx-2"
-        type="button"
-        onClick={ handleBack }
+      <Typography
+        variant="h5"
+        sx={ { padding: '10px 20px', fontWeight: '700' } }
       >
-        Back
-      </button>
+        Recommendation
+      </Typography>
 
-      {recommendationList
-        .map(({ name, image }, i) => (
-          <div
-            className="mx-2 text-center"
-            hidden={ !handleHidden(i) }
-            name={ name }
-            key={ name }
-            data-testid={ `${i}-recommendation-card` }
-          >
-            <p data-testid={ `${i}-recommendation-title` }>
-              {name}
-            </p>
-            <img
-              className="img-thumbnail"
-              src={ image }
-              alt={ name }
-            />
-          </div>
-        ))}
+      <Box sx={ { display: 'flex', alignItems: 'center' } }>
+        <IconButton
+          className="btn btn-primary mx-2"
+          type="button"
+          onClick={ handleBack }
+        >
+          <ArrowBackIcon color="primary" />
+        </IconButton>
+        {recommendationList
+          .map(({ name, image }, i) => (
+            <Paper
+              elevation={ 3 }
+              sx={ { borderRadius: '5px' } }
+              className="mx-2 text-center"
+              hidden={ !handleHidden(i) }
+              name={ name }
+              key={ name }
+              data-testid={ `${i}-recommendation-card` }
+            >
+              <img
+                className="img-thumbnail"
+                src={ image }
+                alt={ name }
+              />
+              <p data-testid={ `${i}-recommendation-title` }>
+                {name}
+              </p>
+            </Paper>
+          ))}
+        <IconButton
+          className="btn btn-primary"
+          type="button"
+          onClick={ handleNext }
+        >
+          <ArrowForwardIcon color="primary" />
+        </IconButton>
+      </Box>
 
-      <button
-        className="btn btn-primary"
-        type="button"
-        onClick={ handleNext }
-      >
-        Next
-      </button>
-    </article>
+    </Box>
   );
 }
 

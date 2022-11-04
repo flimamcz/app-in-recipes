@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Radio, FormControl, RadioGroup, FormControlLabel, Button } from '@mui/material';
 import {
   fetchIngredientFilter,
 } from '../services/fetchHelper';
@@ -54,47 +55,51 @@ export default function SearchBar() {
   };
 
   return (
-    <form>
-      <label htmlFor="ingredient">
-        <input
-          type="radio"
-          id="ingredient"
+    <FormControl
+      fullWidth
+      sx={ {
+        backgroundColor: '#41197F',
+        color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        width: '80%',
+      } }
+    >
+      <RadioGroup row>
+        <FormControlLabel
           value="ingredient"
+          control={ <Radio size="small" /> }
+          label="Ingredient"
           name="filter"
           data-testid="ingredient-search-radio"
           onChange={ handleChangeSearch }
         />
-        Ingredient
-      </label>
-      <label htmlFor="Name">
-        <input
-          type="radio"
-          id="Name"
+        <FormControlLabel
           value="Name"
+          control={ <Radio size="small" /> }
+          label="Name"
           name="filter"
           data-testid="name-search-radio"
           onChange={ handleChangeSearch }
         />
-        Name
-      </label>
-      <label htmlFor="First letter">
-        <input
-          type="radio"
-          id="First letter"
+        <FormControlLabel
           value="First letter"
+          control={ <Radio size="small" /> }
+          label="F"
           name="filter"
           data-testid="first-letter-search-radio"
           onChange={ handleChangeSearch }
         />
-        First letter
-      </label>
-      <button
+      </RadioGroup>
+      <Button
+        fullWidth
+        variant="contained"
         type="button"
         data-testid="exec-search-btn"
         onClick={ handleSearchClick }
       >
         Pesquisar
-      </button>
-    </form>
+      </Button>
+    </FormControl>
   );
 }

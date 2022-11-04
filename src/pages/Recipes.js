@@ -1,20 +1,24 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Box, Button } from '@mui/material';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
 import AppContext from '../context/AppContext';
 import { fetchGeneric, fetchIngredientFilter } from '../services/fetchHelper';
 import Loading from '../components/Loading';
-import Button from '../components/Button';
+import Btn from '../components/Button';
 import Header from '../components/Header';
 import helperSlice from '../services/helperSlice';
 import toggleReset from '../services/toggleReset';
+import AllMeals from '../images/AllMeals.svg';
+import AllDrinks from '../images/AllDrinks.svg';
 
 function Recipes({ match }) {
   const [toggleFilter, setToggleFilter] = useState(false);
-  const { recipes,
-    setRecipes, categoriesFilter, setCategoriesFilter } = useContext(AppContext);
+  const { recipes, setRecipes,
+    categoriesFilter,
+    setCategoriesFilter } = useContext(AppContext);
 
   const router = match.path === '/meals' ? '/meals' : '/drinks';
   const sliceTwelve = 12;
@@ -52,6 +56,7 @@ function Recipes({ match }) {
   }, [setCategoriesFilter, router]);
 
   const requestAllRecipes = async () => {
+    setRecipes([]);
     const ENDPOINT = match.path === '/meals' ? urlMeal : urlDrink;
     const recipesData = await fetchGeneric(ENDPOINT);
     const recipesLengthTwelve = helperSlice(recipesData, sliceTwelve, router);
@@ -59,50 +64,85 @@ function Recipes({ match }) {
   };
 
   const recipesByFilter = async ({ target }) => {
-    const element = target.innerText;
-    const requestRecipesByFilter = await
-    fetchIngredientFilter(element, 'filter', 'c', DB);
-    const recipesFilter = helperSlice(requestRecipesByFilter, sliceTwelve, router);
+    setRecipes([]);
+    const element = target.name;
+    const requestRecipesByFilter = await fetchIngredientFilter(
+      element,
+      'filter',
+      'c',
+      DB,
+    );
+    const recipesFilter = helperSlice(
+      requestRecipesByFilter,
+      sliceTwelve,
+      router,
+    );
     setRecipes(recipesFilter);
     toggleReset(toggleFilter, setToggleFilter, requestAllRecipes);
   };
 
   return (
-    <main>
+    <Box>
       {match.path === '/meals' ? (
         <Header title="Meals" searchImage />
       ) : (
         <Header title="Drinks" searchImage />
       )}
-      {categoriesFilter.length > 0
-        && categoriesFilter.map((category) => (
-          <Button
-            key={ uuidv4() }
-            category={ category }
-            onClick={ recipesByFilter }
-          />
-        ))}
-      <button
-        type="button"
-        data-testid="All-category-filter"
-        onClick={ requestAllRecipes }
+      <Box
+        sx={ {
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'center',
+        } }
       >
-        All
-      </button>
-      {recipes.length > 0 ? (
-        recipes.map((recipe, index) => (
-          <Card
-            key={ uuidv4() }
-            index={ index }
-            recipe={ recipe }
-            type={ match.path }
+        <Button
+          type="button"
+          data-testid="All-category-filter"
+          onClick={ requestAllRecipes }
+          sx={ {
+            background: 'transparent',
+            border: 'none',
+            display: 'flex',
+            flexDirection: 'column',
+          } }
+        >
+          <img
+            src={ DB === 'meal' ? AllMeals : AllDrinks }
+            alt="Icon All recipes"
+            width="50"
           />
-        ))
-      ) : (
-        <Loading />
-      )}
+          <p style={ { paddingTop: '10px', fontSize: '12px' } }>All</p>
+        </Button>
+        {categoriesFilter.length > 0
+          && categoriesFilter.map((category, index) => (
+            <Btn
+              key={ uuidv4() }
+              category={ category }
+              onClick={ recipesByFilter }
+              index={ index }
+              path={ DB }
+            />
+          ))}
+      </Box>
+      <div
+        className="container-card"
+      >
+        {recipes.length > 0 ? (
+          recipes.map((recipe, index) => (
+            <Card
+              key={ uuidv4() }
+              index={ index }
+              recipe={ recipe }
+              type={ match.path }
+            />
+          ))
+        ) : (
+          <Loading />
+        )}
+      </div>
       <Footer />
-    </main>
+    </Box>
   );
 }
 

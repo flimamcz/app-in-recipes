@@ -18,3 +18,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.tomato-image {
+  position: absolute;
+  height: 250px;
+  left: 0;
+  bottom: 35%;
+}
+
+.recipe-photo {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+}

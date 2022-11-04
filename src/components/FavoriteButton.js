@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { IconButton } from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 import {
   getFavoriteRecipes,
   removeFavoriteRecipes,
@@ -34,18 +36,18 @@ function FavoriteButton({ recipeData, indexTest }) {
 
   return (
     <div>
-      <button
+      <IconButton
         data-testid={
           indexTest >= 0
             ? `${indexTest}-horizontal-favorite-btn`
             : 'favorite-btn'
         }
         type="button"
-        src={ favorite ? blackHeartIcon : whiteHeartIcon }
+        color="primary"
         onClick={ handleFavorite }
       >
-        <img alt="favLogo" src={ favorite ? blackHeartIcon : whiteHeartIcon } />
-      </button>
+        {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon /> }
+      </IconButton>
     </div>
   );
 }
