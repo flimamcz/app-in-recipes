@@ -1,7 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Box, Stack, Button } from '@mui/material';
+import DoneIcon from '@mui/icons-material/Done';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Header from '../components/Header';
-import Footer from '../components/Footer';// import PropTypes from 'prop-types';
+import Footer from '../components/Footer';
 import AppContext from '../context/AppContext';
 
 function Profile() {
@@ -24,31 +28,47 @@ function Profile() {
   return (
     <main>
       <Header title="Profile" />
-      <h3 data-testid="profile-email">{emailProfile.email}</h3>
-      <button
-        type="button"
-        data-testid="profile-done-btn"
-        name="done-btn"
-        onClick={ () => (history.push('/done-recipes')) }
+      <Box
+        sx={ {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%' } }
       >
-        Done Recipes
-      </button>
-      <button
-        type="button"
-        data-testid="profile-favorite-btn"
-        name="favorite-btn"
-        onClick={ () => (history.push('/favorite-recipes')) }
-      >
-        Favorite Recipes
-      </button>
-      <button
-        type="button"
-        data-testid="profile-logout-btn"
-        name="profile-btn"
-        onClick={ handleLogout }
-      >
-        Logout
-      </button>
+        <h3 data-testid="profile-email">{emailProfile.email}</h3>
+        <Stack spacing={ 3 }>
+          <Button
+            size="large"
+            startIcon={ <DoneIcon /> }
+            type="button"
+            data-testid="profile-done-btn"
+            name="done-btn"
+            onClick={ () => (history.push('/done-recipes')) }
+          >
+            Done Recipes
+          </Button>
+          <Button
+            type="button"
+            startIcon={ <FavoriteIcon /> }
+            data-testid="profile-favorite-btn"
+            name="favorite-btn"
+            onClick={ () => (history.push('/favorite-recipes')) }
+          >
+            Favorite Recipes
+          </Button>
+          <Button
+            type="button"
+            startIcon={ <LogoutIcon /> }
+            data-testid="profile-logout-btn"
+            name="profile-btn"
+            onClick={ handleLogout }
+          >
+            Logout
+          </Button>
+        </Stack>
+
+      </Box>
       <Footer />
     </main>
   );

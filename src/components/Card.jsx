@@ -7,6 +7,7 @@ function Card({ index, recipe, type }) {
   const { strDrinkThumb, strDrink } = recipe;
   return (
     <Link
+      style={ { textDecoration: 'none' } }
       to={ `/${type === '/meals' ? 'meals'
         : 'drinks'}/${type === '/meals' ? recipe.idMeal
         : recipe.idDrink}` }

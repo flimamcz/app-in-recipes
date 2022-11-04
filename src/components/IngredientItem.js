@@ -27,6 +27,7 @@ function IngredientItem({ ingredient, index, handleCheck, checkedIngredients }) 
           data-testid={ `${index}-ingredient-step` }
           control={
             <Checkbox
+              size="small"
               id={ index.toString() }
               checked={ checkChecked() }
               onChange={ handleCheck }

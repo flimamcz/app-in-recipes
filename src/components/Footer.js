@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
@@ -5,7 +6,18 @@ import mealIcon from '../images/mealIcon.svg';
 
 function Footer() {
   return (
-    <footer data-testid="footer" className="footer">
+    <Box
+      component="footer"
+      data-testid="footer"
+      className="footer"
+      sx={ {
+        backgroundColor: '#41197F',
+        padding: '5npx 10px',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+      } }
+    >
       <div>
         <Link to="/drinks">
           <img
@@ -25,7 +37,7 @@ function Footer() {
           />
         </Link>
       </div>
-    </footer>
+    </Box>
   );
 }
 
