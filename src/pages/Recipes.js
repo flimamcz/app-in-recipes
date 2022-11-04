@@ -56,6 +56,7 @@ function Recipes({ match }) {
   }, [setCategoriesFilter, router]);
 
   const requestAllRecipes = async () => {
+    setRecipes([]);
     const ENDPOINT = match.path === '/meals' ? urlMeal : urlDrink;
     const recipesData = await fetchGeneric(ENDPOINT);
     const recipesLengthTwelve = helperSlice(recipesData, sliceTwelve, router);

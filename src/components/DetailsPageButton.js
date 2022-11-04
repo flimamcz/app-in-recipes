@@ -33,10 +33,6 @@ function DetailsPageButton(props) {
     } else if (isDone) {
       setRecipeStatus('DONE');
     }
-
-    console.log(isInProgressPage);
-    console.log(isInProgress);
-    console.log(isDone);
   }, [recipeData.id, type, history]);
 
   const handleClick = ({ target: { name } }) => {
