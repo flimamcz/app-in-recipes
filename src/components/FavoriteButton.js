@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+
 import {
   getFavoriteRecipes,
   removeFavoriteRecipes,

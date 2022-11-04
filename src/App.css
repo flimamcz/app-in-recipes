@@ -1,3 +1,17 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
 .meals {
   align-items: center;
   background: #0fa36b;
@@ -8,6 +22,7 @@
   height: 100vh;
   justify-content: center;
   width: 100%;
+  background-color: blue;
 }
 
 .rocksGlass {
@@ -15,10 +30,10 @@
   max-height: 80vh;
 }
 
-.meals > .logo {
+.meals>.logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;
-  font-family: Montserrat , sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 3em;
   font-weight: 900;
 }
@@ -60,4 +75,61 @@
 
 .selected {
   text-decoration: line-through solid black;
+}
+
+.card {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px auto;
+  align-self: center;
+  border-radius: 5px;
+  box-shadow: 6px 4px 5px rgba(0, 0, 0, 0.22);
+}
+
+.card:hover {
+  transform: scale(1.03);
+  transition: 0.3s;
+}
+
+.container-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 10px;
+}
+
+@media screen and (min-width: 1150px) {
+  .container-card {
+    max-width: 1150px;
+    column-gap: 40px;
+    row-gap: 40px;
+    margin: 20px auto 40px auto;
+    /* display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) ); */
+  }
+
+  .card {
+    width: 250px;
+    border-radius: 8px;
+  }
+  .card h2{
+    color: #464646;
+    font-size: 20px;
+    padding: 20px 0;
+    text-align: center;
+   }
+}
+
+@media screen and (max-width: 1149px) {
+  .card h2{
+    color: #464646;
+    font-size: 16px;
+    padding: 20px 0;
+    text-align: center;
+   }
 }

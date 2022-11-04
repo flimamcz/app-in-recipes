@@ -34,6 +34,7 @@ export default function Header({ title, searchImage }) {
           backgroundColor: '#FCDC36',
           display: 'flex',
           justifyContent: 'space-between',
+          padding: '20px',
         } }
       >
         <img src={ logoHeader } alt="logo Header" />

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Box } from '@mui/material';
 import AppContext from '../context/AppContext';
 import Loading from '../components/Loading';
 import RecipeInfo from '../components/RecipeInfo';
@@ -7,7 +8,6 @@ import Carousel from '../components/Carousel';
 import DetailsPageButton from '../components/DetailsPageButton';
 import { getRecipeDetails } from '../services/objectHelper';
 import { saveInProgressRecipe } from '../services/localStorageHelper';
-import { Box } from '@mui/material';
 
 function RecipeInProgress({ location: { pathname } }) {
   const { loading, setLoading, checkedIngredients } = useContext(AppContext);
