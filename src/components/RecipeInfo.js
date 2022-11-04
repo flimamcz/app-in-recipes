@@ -1,10 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Box, Typography, Paper, List } from '@mui/material';
 import ShareButton from './ShareButton';
 import FavoriteButton from './FavoriteButton';
 import IngredientItem from './IngredientItem';
 import { getInProgressRecipes } from '../services/localStorageHelper';
 import AppContext from '../context/AppContext';
+
+const stroke = '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000';
 
 function RecipeInfo(props) {
   const {
@@ -34,54 +37,144 @@ function RecipeInfo(props) {
   }, [recipeId, type, setCheckedIngredients]);
 
   return (
-    <section className="contaniner-fluid">
-      <div>
-        <img
-          width={ 200 }
-          data-testid="recipe-photo"
-          src={ image }
-          alt="RecipeImage"
-        />
-        <div className="d-flex">
-          <FavoriteButton recipeData={ recipeData } />
-          <ShareButton recipeData={ recipeData } />
-        </div>
-        <h3 data-testid="recipe-title">{ name }</h3>
-        {(type === 'drinks') ? (
-          <p
-            data-testid="recipe-category"
-          >
-            {alcoholicOrNot}
-          </p>) : null }
-        <h3 data-testid="recipe-category">{ category }</h3>
-
-      </div>
-      <ul>
-        {Object.values(ingredients).map((ingredient, index) => (
-          <IngredientItem
-            key={ `${ingredient}${index}` }
-            ingredient={ ingredient }
-            index={ index }
-            handleCheck={ handleCheck }
-            checkedIngredients={ checkedIngredients }
-          />
-        ))}
-      </ul>
-      <p data-testid="instructions">{ instructions }</p>
-      {(type === 'meals') ? (
-
-        <iframe
-          data-testid="video"
-          width="560"
-          height="315"
-          src={ video }
-          title="YouTube video player"
-          frameBorder="0"
-          allowFullScreen
+    <Box component="section" sx={ { display: 'flex', flexDirection: 'column' } }>
+      <Paper
+        elevation={ 5 }
+        component="article"
+        sx={ {
+          height: '360px',
+          backgroundImage: `url(${image})`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center-center',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '30px',
+          textAlign: 'center',
+        } }
+      >
+        <Box
+          sx={ {
+            padding: '0 20px',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          } }
         >
-          Video
-        </iframe>) : null }
-    </section>
+          <Typography
+            color="primary"
+            variat="h5"
+            data-testid="recipe-category"
+            sx={ {
+              textShadow: stroke,
+            } }
+          >
+            { category }
+          </Typography>
+
+          {(type === 'drinks') && (
+            <Typography
+              color="primary"
+              variat="h5"
+              data-testid="recipe-category"
+              sx={ {
+                textShadow: stroke,
+              } }
+            >
+              {alcoholicOrNot}
+            </Typography>) }
+
+          <div className="d-flex">
+            <FavoriteButton recipeData={ recipeData } />
+            <ShareButton recipeData={ recipeData } />
+          </div>
+        </Box>
+        <Typography
+          variant="h4"
+          color="white"
+          data-testid="recipe-title"
+          sx={ {
+            margin: '0 5px',
+            fontWeight: '700',
+            textShadow: stroke,
+          } }
+        >
+          { name }
+        </Typography>
+        <span> </span>
+      </Paper>
+      <Box sx={ { margin: '5px 10px' } }>
+        <Typography
+          variant="h5"
+          sx={ { padding: '10px 20px', fontWeight: '700' } }
+        >
+          Ingredients
+        </Typography>
+        <List
+          sx={ {
+            border: '1px solid black',
+            borderRadius: '10px' } }
+        >
+          {Object.values(ingredients).map((ingredient, index) => (
+            <IngredientItem
+              key={ `${ingredient}${index}` }
+              ingredient={ ingredient }
+              index={ index }
+              handleCheck={ handleCheck }
+              checkedIngredients={ checkedIngredients }
+            />
+          ))}
+        </List>
+      </Box>
+      <Box sx={ { margin: '5px 10px' } }>
+        <Typography
+          variant="h5"
+          sx={ { padding: '10px 20px', fontWeight: '700' } }
+        >
+          Instructions
+        </Typography>
+        <Box
+          sx={ {
+            border: '1px solid black',
+            borderRadius: '10px' } }
+        >
+          <Typography
+            variant="h7"
+            data-testid="instructions"
+            sx={ { margin: '10px', display: 'block' } }
+          >
+            { instructions }
+
+          </Typography>
+        </Box>
+      </Box>
+      {(type === 'meals') ? (
+        <Box
+          sx={ {
+            margin: '5px 10px' } }
+        >
+          <Typography
+            variant="h5"
+            sx={ { padding: '10px 20px', fontWeight: '700' } }
+          >
+            Video
+          </Typography>
+          <iframe
+            data-testid="video"
+            width="100%"
+            src={ video }
+            title="YouTube video player"
+            frameBorder="0"
+            allowFullScreen
+          >
+            Video
+          </iframe>
+        </Box>) : null }
+
+    </Box>
   );
 }
 

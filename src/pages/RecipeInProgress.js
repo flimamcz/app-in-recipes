@@ -7,6 +7,7 @@ import Carousel from '../components/Carousel';
 import DetailsPageButton from '../components/DetailsPageButton';
 import { getRecipeDetails } from '../services/objectHelper';
 import { saveInProgressRecipe } from '../services/localStorageHelper';
+import { Box } from '@mui/material';
 
 function RecipeInProgress({ location: { pathname } }) {
   const { loading, setLoading, checkedIngredients } = useContext(AppContext);
@@ -45,9 +46,9 @@ function RecipeInProgress({ location: { pathname } }) {
   );
 
   return (
-    <main>
+    <Box component="main" sx={ { backgroundColor: '#F5F5F5' } }>
       { (loading) ? renderLoading() : renderDetails() }
-    </main>
+    </Box>
   );
 }
 

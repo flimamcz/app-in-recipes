@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Box, Button } from '@mui/material';
 import {
   getInProgressRecipes,
   saveInProgressRecipe,
@@ -59,40 +60,44 @@ function DetailsPageButton(props) {
     .keys(recipeData.ingredients).length === checkedIngredients.length;
 
   return (
-    <div>
+    <Box sx={ { width: '80%', position: 'fixed', bottom: '0', left: '10%' } }>
       { (recipeStatus === 'IN_PROGRESS') && (
-        <button
+        <Button
+          fullWidth
+          variant="contained"
           className="fixed-bottom"
           type="button"
           data-testid="start-recipe-btn"
           onClick={ handleClick }
         >
           Continue Recipe
-        </button>)}
+        </Button>)}
       { (recipeStatus === 'START') && (
-        <button
-          className="fixed-bottom"
+        <Button
+          fullWidth
+          variant="contained"
           type="button"
           name="start"
           data-testid="start-recipe-btn"
           onClick={ handleClick }
         >
           Start Recipe
-        </button>)}
+        </Button>)}
       { (recipeStatus === 'IN_PROGRESS_PAGE') && (
-        <button
-          className="fixed-bottom"
+        <Button
+          fullWidth
+          variant="contained"
           type="button"
           disabled={ !finishDisable() }
           data-testid="finish-recipe-btn"
           onClick={ finishRecipe }
         >
           Finish Recipe
-        </button>
+        </Button>
       ) }
       { (recipeStatus === 'DONE') && (null)}
 
-    </div>
+    </Box>
   );
 }
 

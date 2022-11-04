@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Box } from '@mui/material';
 import AppContext from '../context/AppContext';
 import Loading from '../components/Loading';
 import RecipeInfo from '../components/RecipeInfo';
@@ -39,9 +40,9 @@ function RecipeDetails({ location: { pathname } }) {
   );
 
   return (
-    <main>
+    <Box component="main" sx={ { backgroundColor: '#F5F5F5' } }>
       { (loading) ? renderLoading() : renderDetails() }
-    </main>
+    </Box>
   );
 }
 
