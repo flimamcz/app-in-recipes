@@ -12,7 +12,7 @@ function Footer() {
       className="footer"
       sx={ {
         backgroundColor: '#41197F',
-        padding: '5npx 10px',
+        padding: '10px 20px',
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',

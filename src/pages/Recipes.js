@@ -63,6 +63,7 @@ function Recipes({ match }) {
   };
 
   const recipesByFilter = async ({ target }) => {
+    setRecipes([]);
     const element = target.name;
     const requestRecipesByFilter = await fetchIngredientFilter(
       element,
