@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AppContext from '../context/AppContext';
 
 function Card({ index, recipe, type }) {
+  const { setLoading } = useContext(AppContext);
   const { strMealThumb, strMeal } = recipe;
   const { strDrinkThumb, strDrink } = recipe;
   return (
     <Link
       style={ { textDecoration: 'none' } }
+      onClick={ () => setLoading(true) }
       to={ `/${type === '/meals' ? 'meals'
         : 'drinks'}/${type === '/meals' ? recipe.idMeal
         : recipe.idDrink}` }

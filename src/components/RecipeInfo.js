@@ -46,7 +46,7 @@ function RecipeInfo(props) {
           backgroundImage: `url(${image})`,
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center-center',
+          backgroundPosition: 'center center',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',

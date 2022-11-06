@@ -18,6 +18,8 @@ function Provider({ children }) {
   });
   const [checkedIngredients, setCheckedIngredients] = useState([]);
   const [storageFilter, setStorageFilter] = useState('');
+  const [recipeData, setRecipeData] = useState({});
+  const [recommendationList, setRecommendationList] = useState([]);
 
   const handleChangeSearch = ({ target }) => {
     const { name, value } = target;
@@ -63,6 +65,10 @@ function Provider({ children }) {
       favoriteRecipes,
       storageFilter,
       setStorageFilter,
+      recommendationList,
+      recipeData,
+      setRecipeData,
+      setRecommendationList,
     }),
     [
       email,
@@ -75,7 +81,9 @@ function Provider({ children }) {
       searchInput,
       favoriteRecipes,
       checkedIngredients,
-      storageFilter],
+      storageFilter,
+      recommendationList,
+      recipeData],
   );
 
   return (

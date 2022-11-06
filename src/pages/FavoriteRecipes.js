@@ -18,8 +18,13 @@ function FavoriteRecipes() {
   return (
     <main>
       <Header title="Favorite Recipes" searchImage={ false } />
-      <Stack component="main" spacing={ 2 } sx={ { padding: '0 10px' } }>
-        <FilterForm />
+      <FilterForm />
+      <Stack
+        component="main"
+        className="container-card"
+        spacing={ 2 }
+        sx={ { padding: '0 10px' } }
+      >
         {favoriteRecipes
           .filter(({ type }) => ((storageFilter === '') ? true : type === storageFilter))
           .map((recipe, index) => (

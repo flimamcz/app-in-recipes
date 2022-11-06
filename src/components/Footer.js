@@ -1,5 +1,6 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React from 'react';
+import InfoIcon from '@mui/icons-material/Info';
 import { Link } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
@@ -18,7 +19,7 @@ function Footer() {
         justifyContent: 'space-between',
       } }
     >
-      <div>
+      <div className="d-flex flex-column align-items-center">
         <Link to="/drinks">
           <img
             data-testid="drinks-bottom-btn"
@@ -26,9 +27,17 @@ function Footer() {
             alt="Icone representando um drink"
           />
         </Link>
+        <Typography variant="caption" color="primary">Drinks</Typography>
       </div>
 
-      <div>
+      <div className="d-flex flex-column align-items-center">
+        <Link to="/about">
+          <InfoIcon color="primary" />
+        </Link>
+        <Typography variant="caption" color="primary">About Us</Typography>
+      </div>
+
+      <div className="d-flex flex-column align-items-center">
         <Link to="/meals">
           <img
             data-testid="meals-bottom-btn"
@@ -36,6 +45,7 @@ function Footer() {
             alt="Icone representando comidas"
           />
         </Link>
+        <Typography variant="caption" color="primary">Meals</Typography>
       </div>
     </Box>
   );
