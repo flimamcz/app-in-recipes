@@ -65,7 +65,8 @@ export default function Header({ title, searchImage }) {
           textAlign: 'center',
         } }
       >
-        <img src={ (title === 'Meals') ? mealLogo : drinkLogo } alt="page logo" />
+        { title !== undefined && (
+          <img src={ (title === 'Meals') ? mealLogo : drinkLogo } alt="page logo" />)}
         <Typography
           variant="h5"
           color="secondary"

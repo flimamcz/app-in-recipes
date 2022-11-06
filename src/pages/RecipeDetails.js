@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
 import AppContext from '../context/AppContext';
@@ -7,23 +8,36 @@ import RecipeInfo from '../components/RecipeInfo';
 import Carousel from '../components/Carousel';
 import DetailsPageButton from '../components/DetailsPageButton';
 import { getRecipeDetails } from '../services/objectHelper';
+import { saveInProgressRecipe } from '../services/localStorageHelper';
 
 function RecipeDetails({ location: { pathname } }) {
-  const { loading, setLoading } = useContext(AppContext);
-  const [recipeData, setRecipeData] = useState({});
-  const [recommendationList, setRecommendationList] = useState([]);
+  const {
+    loading,
+    setLoading,
+    checkedIngredients,
+    recipeData,
+    recommendationList,
+    setRecommendationList,
+    setRecipeData } = useContext(AppContext);
 
   useEffect(() => {
     const getPageInfo = async () => {
       setLoading(true);
       const urlData = pathname.split('/');
-      const { minRecommendationList, handleRecipe } = await getRecipeDetails(urlData);
-      setRecommendationList(minRecommendationList);
-      setRecipeData(handleRecipe);
+      console.log(recipeData.id === urlData[2]);
+      if (recipeData.id !== undefined || recipeData.id !== urlData[2]) {
+        const { minRecommendationList, handleRecipe } = await getRecipeDetails(urlData);
+        setRecommendationList(minRecommendationList);
+        setRecipeData(handleRecipe);
+      }
       setLoading(false);
     };
     getPageInfo();
-  }, [pathname, setLoading]);
+  }, [pathname, setLoading, setRecipeData, setRecommendationList]);
+
+  useEffect(() => {
+    saveInProgressRecipe(recipeData, checkedIngredients);
+  }, [checkedIngredients, recipeData]);
 
   const renderDetails = () => (
     <section>
